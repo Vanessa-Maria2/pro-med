@@ -2,6 +2,7 @@ package br.edu.ufrn.promed.repository;
 
 import br.edu.ufrn.promed.config.DatabaseConnection;
 import br.edu.ufrn.promed.model.Pessoa;
+import br.edu.ufrn.promed.util.PasswordUtil;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -10,9 +11,11 @@ import java.sql.*;
 public class PessoaRepository {
 
     private final DatabaseConnection databaseConnection;
+    private final PasswordUtil passwordUtil;
 
-    public PessoaRepository(DatabaseConnection databaseConnection) {
+    public PessoaRepository(DatabaseConnection databaseConnection, PasswordUtil passwordUtil) {
         this.databaseConnection = databaseConnection;
+        this.passwordUtil = passwordUtil;
     }
     public void cadastro(Pessoa pessoa) {
         String sql = "INSERT INTO pessoa (cpf, nome, sobrenome, email, endereco, data_nascimento, senha, ativo) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
@@ -28,13 +31,12 @@ public class PessoaRepository {
             java.util.Date data = pessoa.getDataNascimento();
             Date dataSql = new java.sql.Date(data.getTime());
             ps.setDate(6, dataSql);
-            ps.setString(7, pessoa.getSenha());
+            ps.setString(7, passwordUtil.hashPassword(pessoa.getSenha()));
             ps.setString(8, "1");
             ps.executeUpdate();
+            connection.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
-
-
 }
