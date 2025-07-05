@@ -13,12 +13,17 @@ public class PessoaRepository {
     private final DatabaseConnection databaseConnection;
     private final PasswordUtil passwordUtil;
     private final TelefoneRepository telefoneRepository;
+    private final GerenteRepository gerenteRepository;
+    private final RecepcionistaRepository recepcionistaRepository;
 
-    public PessoaRepository(DatabaseConnection databaseConnection, PasswordUtil passwordUtil, TelefoneRepository telefoneRepository) {
+    public PessoaRepository(DatabaseConnection databaseConnection, PasswordUtil passwordUtil, TelefoneRepository telefoneRepository, GerenteRepository gerenteRepository, RecepcionistaRepository recepcionistaRepository) {
         this.databaseConnection = databaseConnection;
         this.passwordUtil = passwordUtil;
         this.telefoneRepository = telefoneRepository;
+        this.gerenteRepository = gerenteRepository;
+        this.recepcionistaRepository = recepcionistaRepository;
     }
+
     public void cadastro(Pessoa pessoa) {
         String sql = "INSERT INTO pessoa (cpf, nome, sobrenome, email, endereco, data_nascimento, senha, ativo) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -36,9 +41,17 @@ public class PessoaRepository {
             ps.setString(7, passwordUtil.hashPassword(pessoa.getSenha()));
             ps.setString(8, "1");
             ps.executeUpdate();
+
             databaseConnection.closeConnection();
 
             this.telefoneRepository.cadastroTelefone(pessoa);
+
+            if (pessoa.getTipo().equals("Recepcionista"))
+                this.recepcionistaRepository.cadastro(pessoa);
+
+            if(pessoa.getTipo().equals("Gerente"))
+                this.gerenteRepository.cadastro(pessoa);
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
