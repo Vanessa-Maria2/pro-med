@@ -2,8 +2,6 @@ package br.edu.ufrn.promed.model;
 
 public class LoginRequestDto {
 
-
-
     private String email;
     private String password;
 
