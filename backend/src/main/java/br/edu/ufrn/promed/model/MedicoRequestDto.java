@@ -1,14 +1,18 @@
 package br.edu.ufrn.promed.model;
 
+import jakarta.validation.constraints.NotNull;
+
 import java.util.List;
 
 public class MedicoRequestDto {
 
+    @NotNull(message = "O campo número CRM é obrigatório")
     private int numCrm;
 
+    @NotNull(message = "O campo uf CRM é obrigatório")
     private int ufCrm;
 
-    private Pessoa pessoa;
+    private PessoaDto pessoaDto;
 
     private List<Formacao> formacoes;
 
@@ -30,12 +34,12 @@ public class MedicoRequestDto {
         this.ufCrm = ufCrm;
     }
 
-    public Pessoa getPessoa() {
-        return pessoa;
+    public PessoaDto getPessoaDto() {
+        return pessoaDto;
     }
 
-    public void setPessoa(Pessoa pessoa) {
-        this.pessoa = pessoa;
+    public void setPessoaDto(PessoaDto pessoaDto) {
+        this.pessoaDto = pessoaDto;
     }
 
     public List<Formacao> getFormacoes() {

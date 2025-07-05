@@ -4,10 +4,12 @@ import br.edu.ufrn.promed.model.Medico;
 import br.edu.ufrn.promed.model.MedicoRequestDto;
 import br.edu.ufrn.promed.model.MedicoResponseDto;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface MedicoMapper {
 
+    @Mapping(source = "pessoaDto", target = "pessoa")
     Medico toMedico(MedicoRequestDto medicoRequestDto);
 
     MedicoResponseDto toMedicoResponseDto(Medico medico);

@@ -3,6 +3,7 @@ package br.edu.ufrn.promed.controller;
 import br.edu.ufrn.promed.model.MedicoRequestDto;
 import br.edu.ufrn.promed.model.MedicoResponseDto;
 import br.edu.ufrn.promed.service.MedicoService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,7 +21,7 @@ public class MedicoController {
     }
 
     @PostMapping
-    public ResponseEntity<MedicoResponseDto> cadastro(@RequestBody MedicoRequestDto medicoRequestDto){
+    public ResponseEntity<MedicoResponseDto> cadastro(@RequestBody @Valid MedicoRequestDto medicoRequestDto){
         var medico = medicoService.cadastro(medicoRequestDto);
         return ResponseEntity.ok(medico);
     }
