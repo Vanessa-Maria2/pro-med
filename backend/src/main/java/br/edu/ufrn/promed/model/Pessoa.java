@@ -11,6 +11,8 @@ public class Pessoa {
     private String endereco;
     private Date dataNascimento;
     private String senha;
+    private List<Telefone> telefones;
+    private String tipo;
 
     public String getCpf() {
         return cpf;
@@ -76,5 +78,11 @@ public class Pessoa {
         this.telefones = telefones;
     }
 
-    private List<Telefone> telefones;
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
 }

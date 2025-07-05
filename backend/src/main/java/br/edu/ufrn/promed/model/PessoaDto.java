@@ -1,15 +1,40 @@
 package br.edu.ufrn.promed.model;
 
+import jakarta.validation.constraints.*;
+import org.hibernate.validator.constraints.br.CPF;
+
 import java.util.Date;
 import java.util.List;
 
 public class PessoaDto {
+
+    @NotBlank(message="O campo cpf é obrigatório")
+    @CPF(message = "O campo CPF é inválido")
     private String cpf;
+
+    @NotBlank(message = "O campo nome é obrigatório")
     private String nome;
+
+    @NotBlank(message = "O campo sobrenome é obrigatório")
     private String sobrenome;
+
+    @NotBlank(message = "O campo email é obrigatório")
+    @Email(message = "O campo email é inválido")
     private String email;
+
+    @NotBlank(message = "O campo endereço é obrigatório")
     private String endereco;
+
+    @NotNull(message = "O campo data de nascimento é obrigatório")
     private Date dataNascimento;
+
+    @NotBlank(message = "O campo senha é obrigatório")
+    @Size(min = 6, max = 10, message = "O tamanho excedeu, escreva uma senha de 6 a 10 dígitos")
+    private String senha;
+
+    private List<Telefone> telefones;
+
+    private String tipo;
 
     public String getCpf() {
         return cpf;
@@ -75,6 +100,11 @@ public class PessoaDto {
         this.telefones = telefones;
     }
 
-    private String senha;
-    private List<Telefone> telefones;
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
 }
