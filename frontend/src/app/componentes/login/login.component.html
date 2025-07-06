@@ -1,0 +1,40 @@
+<div class="login-container">
+  <div class="left-side">
+        <img src="assets/imagem.png" alt="Imagem ilustrativa" class="login-image"  />
+  </div>
+
+  <div class="right-side">
+    <div class="logo-completo">
+        <img src="assets/logo.png" alt="Logo do sistema" class="logo-imagem" />
+        <div class="textos">
+            <h2>ProMed</h2>
+            <h2 class="barra"></h2>
+            <p>Prontuário Médico</p>
+        </div>
+    </div>
+
+    <form class="login-form" (ngSubmit)="login()" #loginForm="ngForm">
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label class="input-bg-custom">Login</mat-label>
+        <input matInput name="email" [(ngModel)]="loginData.email" email required placeholder="Digite seu email" class="input-bg-custom" #email="ngModel" />
+        <mat-error *ngIf="email.invalid && email.touched">
+          <small *ngIf="email.errors?.['required']">Email é obrigatório</small>
+          <small *ngIf="email.errors?.['email']">Email inválido</small>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Senha</mat-label>
+        <input matInput name="password" type="password" placeholder="Digite sua senha"  [(ngModel)]="loginData.password"   minlength="6" maxlength="8" required #password="ngModel"/>       
+        <mat-error *ngIf="password.invalid && password.touched">
+          <small *ngIf="password.errors?.['required']">Senha é obrigatório</small>
+          <small *ngIf="password.errors?.['minlength']">Senha deve ter no mínimo 6 caracteres</small>
+          <small *ngIf="password.errors?.['maxlength']">Senha deve ter no máximo 8 caracteres</small>
+        </mat-error>
+      </mat-form-field>
+
+     <button mat-button type="submit" class="btn">Entrar</button>
+    </form>
+  </div>
+</div>
+

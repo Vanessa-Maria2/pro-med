@@ -1,6 +1,6 @@
 package br.edu.ufrn.promed.service;
 
-import br.edu.ufrn.promed.model.LoginRequestDto;
+import br.edu.ufrn.promed.dto.request.LoginRequestDto;
 import br.edu.ufrn.promed.model.Pessoa;
 import br.edu.ufrn.promed.repository.PessoaRepository;
 import br.edu.ufrn.promed.util.PasswordUtil;

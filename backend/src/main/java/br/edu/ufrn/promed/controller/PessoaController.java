@@ -1,8 +1,8 @@
 package br.edu.ufrn.promed.controller;
 
-import br.edu.ufrn.promed.model.LoginRequestDto;
+import br.edu.ufrn.promed.dto.request.LoginRequestDto;
 import br.edu.ufrn.promed.model.Pessoa;
-import br.edu.ufrn.promed.model.PessoaDto;
+import br.edu.ufrn.promed.dto.request.PessoaRequestDto;
 import br.edu.ufrn.promed.service.AuthService;
 import br.edu.ufrn.promed.service.PessoaService;
 import org.springframework.http.HttpStatus;
@@ -25,7 +25,7 @@ public class PessoaController {
     }
 
     @PostMapping
-    public ResponseEntity<Pessoa> cadastro(@RequestBody PessoaDto pessoaDto) {
+    public ResponseEntity<Pessoa> cadastro(@RequestBody PessoaRequestDto pessoaDto) {
         var pessoa = pessoaService.cadastro(pessoaDto);
         return ResponseEntity.ok(pessoa);
     }
