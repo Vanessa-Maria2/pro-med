@@ -1,4 +1,4 @@
-package br.edu.ufrn.promed.model;
+package br.edu.ufrn.promed.dto.request;
 
 public class LoginRequestDto {
 

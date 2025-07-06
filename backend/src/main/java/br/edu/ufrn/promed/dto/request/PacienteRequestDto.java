@@ -1,5 +1,7 @@
-package br.edu.ufrn.promed.model;
+package br.edu.ufrn.promed.dto.request;
 
+import br.edu.ufrn.promed.model.Alergia;
+import br.edu.ufrn.promed.model.Doenca;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
@@ -20,7 +22,7 @@ public class PacienteRequestDto {
     @NotNull(message="O campo rh sanguíneo é obrigatório")
     private char rhSanguineo;
 
-    private PessoaDto pessoaDto;
+    private PessoaRequestDto pessoaRequestDto;
 
     private List<Alergia> alergias;
 
@@ -70,12 +72,12 @@ public class PacienteRequestDto {
         this.rhSanguineo = rhSanguineo;
     }
 
-    public PessoaDto getPessoaDto() {
-        return pessoaDto;
+    public PessoaRequestDto getPessoaRequestDto() {
+        return pessoaRequestDto;
     }
 
-    public void setPessoaDto(PessoaDto pessoaDto) {
-        this.pessoaDto = pessoaDto;
+    public void setPessoaRequestDto(PessoaRequestDto pessoaRequestDto) {
+        this.pessoaRequestDto = pessoaRequestDto;
     }
 
     public List<Alergia> getAlergias() {

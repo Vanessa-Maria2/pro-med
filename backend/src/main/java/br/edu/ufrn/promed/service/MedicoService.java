@@ -1,8 +1,8 @@
 package br.edu.ufrn.promed.service;
 
 import br.edu.ufrn.promed.mapper.MedicoMapper;
-import br.edu.ufrn.promed.model.MedicoRequestDto;
-import br.edu.ufrn.promed.model.MedicoResponseDto;
+import br.edu.ufrn.promed.dto.request.MedicoRequestDto;
+import br.edu.ufrn.promed.dto.response.MedicoResponseDto;
 import br.edu.ufrn.promed.repository.MedicoRepository;
 import org.springframework.stereotype.Service;
 

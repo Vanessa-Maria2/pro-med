@@ -1,9 +1,8 @@
 package br.edu.ufrn.promed.service;
 
 import br.edu.ufrn.promed.mapper.PessoaMapper;
-import br.edu.ufrn.promed.model.LoginRequestDto;
 import br.edu.ufrn.promed.model.Pessoa;
-import br.edu.ufrn.promed.model.PessoaDto;
+import br.edu.ufrn.promed.dto.request.PessoaRequestDto;
 import br.edu.ufrn.promed.repository.PessoaRepository;
 import br.edu.ufrn.promed.util.PasswordUtil;
 import org.springframework.stereotype.Service;
@@ -21,7 +20,7 @@ public class PessoaService {
         this.pessoaMapper = pessoaMapper;
     }
 
-    public Pessoa cadastro(PessoaDto pessoaDto) {
+    public Pessoa cadastro(PessoaRequestDto pessoaDto) {
         var pessoa = pessoaMapper.toPessoa(pessoaDto);
         pessoaRepository.cadastro(pessoa);
         return pessoa;

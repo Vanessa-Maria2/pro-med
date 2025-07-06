@@ -8,10 +8,11 @@ import {MatButtonModule} from '@angular/material/button';
 import { LoginType } from '../../models/loginType';
 import { HttpClient } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatDividerModule, MatIconModule, HttpClientModule],
+  imports: [FormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatDividerModule, MatIconModule, HttpClientModule, CommonModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })

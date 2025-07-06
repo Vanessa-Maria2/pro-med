@@ -1,4 +1,8 @@
-package br.edu.ufrn.promed.model;
+package br.edu.ufrn.promed.dto.response;
+
+import br.edu.ufrn.promed.model.Alergia;
+import br.edu.ufrn.promed.model.Doenca;
+import br.edu.ufrn.promed.model.Pessoa;
 
 import java.util.List;
 

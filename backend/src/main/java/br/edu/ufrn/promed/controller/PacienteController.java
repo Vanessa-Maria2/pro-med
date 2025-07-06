@@ -1,7 +1,7 @@
 package br.edu.ufrn.promed.controller;
 
-import br.edu.ufrn.promed.model.PacienteRequestDto;
-import br.edu.ufrn.promed.model.PacienteResponseDto;
+import br.edu.ufrn.promed.dto.request.PacienteRequestDto;
+import br.edu.ufrn.promed.dto.response.PacienteResponseDto;
 import br.edu.ufrn.promed.service.PacienteService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;

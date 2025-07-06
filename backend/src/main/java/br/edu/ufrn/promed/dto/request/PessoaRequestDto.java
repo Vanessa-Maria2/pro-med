@@ -1,12 +1,13 @@
-package br.edu.ufrn.promed.model;
+package br.edu.ufrn.promed.dto.request;
 
+import br.edu.ufrn.promed.model.Telefone;
 import jakarta.validation.constraints.*;
 import org.hibernate.validator.constraints.br.CPF;
 
 import java.util.Date;
 import java.util.List;
 
-public class PessoaDto {
+public class PessoaRequestDto {
 
     @NotBlank(message="O campo cpf é obrigatório")
     @CPF(message = "O campo CPF é inválido")

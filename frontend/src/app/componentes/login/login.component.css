@@ -90,3 +90,8 @@
   margin: 0 10px;
   vertical-align: middle;   
 }
+
+mat-error {
+  color: #f76457;
+  font-size: 20;
+}

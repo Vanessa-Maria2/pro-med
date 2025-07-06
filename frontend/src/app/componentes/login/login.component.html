@@ -16,13 +16,21 @@
     <form class="login-form" (ngSubmit)="login()" #loginForm="ngForm">
       <mat-form-field appearance="fill" class="full-width">
         <mat-label class="input-bg-custom">Login</mat-label>
-        <input matInput name="email" [(ngModel)]="loginData.email" required placeholder="Digite seu email" class="input-bg-custom" />
+        <input matInput name="email" [(ngModel)]="loginData.email" email required placeholder="Digite seu email" class="input-bg-custom" #email="ngModel" />
+        <mat-error *ngIf="email.invalid && email.touched">
+          <small *ngIf="email.errors?.['required']">Email é obrigatório</small>
+          <small *ngIf="email.errors?.['email']">Email inválido</small>
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="full-width">
         <mat-label>Senha</mat-label>
-        <input matInput name="password" type="password" placeholder="Digite sua senha"  [(ngModel)]="loginData.password"
-      required />
+        <input matInput name="password" type="password" placeholder="Digite sua senha"  [(ngModel)]="loginData.password"   minlength="6" maxlength="8" required #password="ngModel"/>       
+        <mat-error *ngIf="password.invalid && password.touched">
+          <small *ngIf="password.errors?.['required']">Senha é obrigatório</small>
+          <small *ngIf="password.errors?.['minlength']">Senha deve ter no mínimo 6 caracteres</small>
+          <small *ngIf="password.errors?.['maxlength']">Senha deve ter no máximo 8 caracteres</small>
+        </mat-error>
       </mat-form-field>
 
      <button mat-button type="submit" class="btn">Entrar</button>

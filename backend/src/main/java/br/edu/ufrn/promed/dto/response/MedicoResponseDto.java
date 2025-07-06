@@ -1,18 +1,18 @@
-package br.edu.ufrn.promed.model;
+package br.edu.ufrn.promed.dto.response;
 
-import jakarta.validation.constraints.NotNull;
+import br.edu.ufrn.promed.model.Especialidade;
+import br.edu.ufrn.promed.model.Formacao;
+import br.edu.ufrn.promed.model.Pessoa;
 
 import java.util.List;
 
-public class MedicoRequestDto {
+public class MedicoResponseDto {
 
-    @NotNull(message = "O campo número CRM é obrigatório")
     private int numCrm;
 
-    @NotNull(message = "O campo uf CRM é obrigatório")
     private int ufCrm;
 
-    private PessoaDto pessoaDto;
+    private Pessoa pessoa;
 
     private List<Formacao> formacoes;
 
@@ -34,12 +34,12 @@ public class MedicoRequestDto {
         this.ufCrm = ufCrm;
     }
 
-    public PessoaDto getPessoaDto() {
-        return pessoaDto;
+    public Pessoa getPessoa() {
+        return pessoa;
     }
 
-    public void setPessoaDto(PessoaDto pessoaDto) {
-        this.pessoaDto = pessoaDto;
+    public void setPessoa(Pessoa pessoa) {
+        this.pessoa = pessoa;
     }
 
     public List<Formacao> getFormacoes() {
