@@ -19,17 +19,16 @@ public class EspecialidadeRepository {
     }
 
     public void cadastrarEspecialidade(Medico medico) {
-        String sql = "INSERT INTO especialidade (id, descricao, Medico_num_crm, Medico_cpf, Medico_ue_crm) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO medico_has_especialidade (Medico_num_crm, Medico_cpf, Medico_uf_crm, Especialidade_id) VALUES (?, ?, ?, ?)";
 
         try {
             Connection connection = databaseConnection.getConnection();
             PreparedStatement ps = connection.prepareStatement(sql);
             for (Especialidade especialidade : medico.getEspecialidades()) {
-                ps.setInt(1, especialidade.getId());
-                ps.setString(2, especialidade.getDescricao());
-                ps.setString(3, String.valueOf(medico.getNumCrm()));
-                ps.setString(4, String.valueOf(medico.getPessoa().getCpf()));
-                ps.setString(5, String.valueOf(medico.getUfCrm()));
+                ps.setString(1, String.valueOf(medico.getNumCrm()));
+                ps.setString(2, String.valueOf(medico.getPessoa().getCpf()));
+                ps.setString(3, String.valueOf(medico.getUfCrm()));
+                ps.setString(4, String.valueOf(especialidade.getId()));
                 ps.executeUpdate();
             }
             databaseConnection.closeConnection();
