@@ -5,6 +5,7 @@ import br.edu.ufrn.promed.model.Recorrencia;
 import br.edu.ufrn.promed.repository.RecorrenciaRepository;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,7 @@ public class RecorrenciaService {
         this.recorrenciaRepository = recorrenciaRepository;
     }
 
-    public RecorrenciaRequestDto cadastrar(RecorrenciaRequestDto recorrenciaRequestDto) {
+    public RecorrenciaRequestDto cadastrar(RecorrenciaRequestDto recorrenciaRequestDto) throws SQLException {
         this.recorrenciaRepository.cadastro(recorrenciaRequestDto);
         return recorrenciaRequestDto;
     }

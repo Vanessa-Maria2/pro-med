@@ -6,6 +6,7 @@ import br.edu.ufrn.promed.service.RecorrenciaService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class RecorrenciaController {
     }
 
     @PostMapping
-    public ResponseEntity<RecorrenciaRequestDto> cadastrarRecorrencia(@RequestBody RecorrenciaRequestDto recorrenciaRequestDto) {
+    public ResponseEntity<RecorrenciaRequestDto> cadastrarRecorrencia(@RequestBody RecorrenciaRequestDto recorrenciaRequestDto) throws SQLException {
         var result = this.recorrenciaService.cadastrar(recorrenciaRequestDto);
         return ResponseEntity.ok(result);
     }

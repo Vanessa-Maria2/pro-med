@@ -18,30 +18,24 @@ public class GrupoRecorrenciaRepository {
         this.databaseConnection = databaseConnection;
     }
 
-    public GrupoRecorrencia cadastro(GrupoRecorrencia grupoRecorrencia) {
+    public GrupoRecorrencia cadastro(Connection connection, GrupoRecorrencia grupoRecorrencia) {
         String sql = "INSERT INTO gruporecorrencia (id, descricao) VALUES (?, ?)";
 
         try {
-            Connection connection = databaseConnection.getConnection();
-            connection.setAutoCommit(false);
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, String.valueOf(grupoRecorrencia.getId()));
             ps.setString(2, grupoRecorrencia.getDescricao());
             ps.executeUpdate();
-            connection.commit();
-            databaseConnection.closeConnection();
-
-            return buscarPorId(grupoRecorrencia.getDescricao());
+            return buscarPorId(connection, grupoRecorrencia.getDescricao());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public GrupoRecorrencia buscarPorId(String descricao) {
+    public GrupoRecorrencia buscarPorId(Connection connection, String descricao) {
         String sql = "SELECT * FROM gruporecorrencia WHERE descricao = ?";
         GrupoRecorrencia grupoRecorrencia = null;
         try {
-            Connection connection = databaseConnection.getConnection();
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, descricao);
             ResultSet rs = ps.executeQuery();
