@@ -82,7 +82,7 @@ public class RecorrenciaRepository {
         List<LocalDate> datas = gerarDatas(recorrencia.getData_inicio().toLocalDate(), recorrencia.getData_fim().toLocalDate(), recorrencia.getDiaSemanas());
 
         for(LocalDate data: datas) {
-            boolean existe = isHorarioOcupado(connection, recorrencia, recorrenciaRequestDto);
+            boolean existe = isHorarioOcupado(connection, recorrencia, recorrenciaRequestDto, data);
             if(existe) {
                 throw new SQLIntegrityConstraintViolationException("Horário de atendimento já existe") ;
             }
@@ -157,13 +157,13 @@ public class RecorrenciaRepository {
         return datas;
     }
 
-    public boolean isHorarioOcupado(Connection connection, Recorrencia recorrencia, RecorrenciaRequestDto recorrenciaRequestDto) {
+    public boolean isHorarioOcupado(Connection connection, Recorrencia recorrencia, RecorrenciaRequestDto recorrenciaRequestDto, LocalDate data) {
         String sql = "SELECT * FROM horario_atendimento WHERE horario = ? AND data_disponivel = ? AND Medico_num_crm = ? AND Medico_cpf = ? AND Medico_uf_crm = ?";
 
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, recorrencia.getHora_inicio().toString());
-            ps.setString(2, recorrencia.getData_inicio().toString());
+            ps.setString(2, data.toString());
             ps.setString(3, String.valueOf(recorrenciaRequestDto.getNumCrmMedico()));
             ps.setString(4, recorrenciaRequestDto.getCpfMedico());
             ps.setString(5, recorrenciaRequestDto.getUfCrmMedico());
