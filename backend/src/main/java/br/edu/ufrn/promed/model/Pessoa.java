@@ -13,6 +13,14 @@ public class Pessoa {
     private String senha;
     private List<Telefone> telefones;
     private String tipo;
+    private boolean ativo;
+
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {this.ativo = ativo;}
+
 
     public String getCpf() {
         return cpf;
