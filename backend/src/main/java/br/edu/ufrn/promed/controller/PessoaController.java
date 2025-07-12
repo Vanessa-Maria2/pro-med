@@ -42,9 +42,9 @@ public class PessoaController {
         }
     }
 
-    @PutMapping("/deslogar/{cpf}")
-    public ResponseEntity<Void> deslogar(@PathVariable String cpf){
-        pessoaService.deslogar(cpf);
+    @PutMapping("/inativar/{cpf}")
+    public ResponseEntity<Void> inativar(@PathVariable String cpf){
+        pessoaService.inativar(cpf);
         return ResponseEntity.noContent().build();
     }
 }

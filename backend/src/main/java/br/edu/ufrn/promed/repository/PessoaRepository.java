@@ -99,7 +99,7 @@ public class PessoaRepository {
         }
     }
 
-    public void deslogar(String cpf) {
+    public void inativar(String cpf) {
         String sql = "UPDATE pessoa SET ativo = ? WHERE cpf = ?";
 
         try (
