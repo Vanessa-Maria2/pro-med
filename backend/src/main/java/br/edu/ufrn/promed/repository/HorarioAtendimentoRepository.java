@@ -54,4 +54,37 @@ public class HorarioAtendimentoRepository {
         return horarioAtendimentos;
     }
 
+    public boolean isHorarioAtendimentoDisponivel(int horarioAtendimentoId) {
+        String sql = "SELECT COUNT(*) FROM horario_atendimento WHERE id = ? AND status = ?";
+
+        try {
+            Connection connection = databaseConnection.getConnection();
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, horarioAtendimentoId);
+            ps.setString(2, StatusHorarioAtendimento.DISPONIVEL.toString());
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                int count = rs.getInt(1);
+                if (count == 1) {
+                    return true;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public void ocuparHorario(int horarioAtendimentoId, Connection connection) {
+        String sql = "UPDATE horario_atendimento SET status = ? WHERE id = ?";
+
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, StatusHorarioAtendimento.AGENDADO.toString());
+            ps.setInt(2, horarioAtendimentoId);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
