@@ -77,10 +77,41 @@ public class PessoaRepository {
                 pessoa.setDataNascimento(rs.getDate("data_nascimento"));
                 pessoa.setSenha(rs.getString("senha"));
             }
-            connection.close();
+            databaseConnection.closeConnection();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return Optional.ofNullable(pessoa);
+    }
+
+    public void ativar(String email) {
+        String sql = "UPDATE pessoa SET ativo = ? WHERE email = ?";
+
+        try {
+            Connection connection = databaseConnection.getConnection();
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, "1");
+            ps.setString(2, email);
+            ps.executeUpdate();
+            databaseConnection.closeConnection();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void deslogar(String cpf) {
+        String sql = "UPDATE pessoa SET ativo = ? WHERE cpf = ?";
+
+        try (
+                Connection connection = databaseConnection.getConnection();
+                PreparedStatement ps = connection.prepareStatement(sql)
+        ) {
+            connection.setAutoCommit(true);
+            ps.setBoolean(1, false);
+            ps.setString(2, cpf);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
