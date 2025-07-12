@@ -30,8 +30,12 @@ public class PessoaService {
         return pessoaRepository.findByEmail(email);
     }
 
+<<<<<<< HEAD
     public void inativar(String cpf){
         pessoaRepository.inativar(cpf);
     }
+=======
+    public void inativar(String cpf){ pessoaRepository.inativar(cpf);}
+>>>>>>> 5bf0b7a (Rename `deslogar` to `inativar` in `PessoaController`, `PessoaService`, and `PessoaRepository`.)
 
 }
