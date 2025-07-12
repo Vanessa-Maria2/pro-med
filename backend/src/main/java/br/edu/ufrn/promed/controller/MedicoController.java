@@ -5,10 +5,9 @@ import br.edu.ufrn.promed.dto.response.MedicoResponseDto;
 import br.edu.ufrn.promed.service.MedicoService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/medico")
@@ -24,5 +23,11 @@ public class MedicoController {
     public ResponseEntity<MedicoResponseDto> cadastro(@RequestBody @Valid MedicoRequestDto medicoRequestDto){
         var medico = medicoService.cadastro(medicoRequestDto);
         return ResponseEntity.ok(medico);
+    }
+
+    @GetMapping("/buscarTodos")
+    public ResponseEntity<List<MedicoResponseDto>> buscarTodos(){
+        var medicos = medicoService.buscarTodos();
+        return ResponseEntity.ok(medicos);
     }
 }

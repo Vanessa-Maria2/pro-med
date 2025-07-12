@@ -10,7 +10,7 @@ public class MedicoResponseDto {
 
     private int numCrm;
 
-    private int ufCrm;
+    private String ufCrm;
 
     private Pessoa pessoa;
 
@@ -26,13 +26,9 @@ public class MedicoResponseDto {
         this.numCrm = numCrm;
     }
 
-    public int getUfCrm() {
-        return ufCrm;
-    }
+    public String getUfCrm() { return ufCrm; }
 
-    public void setUfCrm(int ufCrm) {
-        this.ufCrm = ufCrm;
-    }
+    public void setUfCrm(String ufCrm) { this.ufCrm = ufCrm; }
 
     public Pessoa getPessoa() {
         return pessoa;
