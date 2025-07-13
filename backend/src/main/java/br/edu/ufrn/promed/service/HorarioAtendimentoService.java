@@ -1,9 +1,11 @@
 package br.edu.ufrn.promed.service;
 
 import br.edu.ufrn.promed.dto.response.HorarioAtendimentoResponseDto;
+import br.edu.ufrn.promed.model.HorarioAtendimento;
 import br.edu.ufrn.promed.repository.HorarioAtendimentoRepository;
 import org.springframework.stereotype.Service;
 
+import java.sql.Connection;
 import java.util.List;
 
 @Service
@@ -22,5 +24,13 @@ public class HorarioAtendimentoService {
     public List<HorarioAtendimentoResponseDto> buscarPorMedico(String Medico_cpf) {
         List<HorarioAtendimentoResponseDto> horaraioDtoList = horarioAtendimentoRepository.buscarPorMedico(Medico_cpf);
         return horaraioDtoList;
+    }
+  
+    public boolean isHorarioAtendimentoDisponivel(int horarioAtendimentoId) {
+        return this.horarioAtendimentoRepository.isHorarioAtendimentoDisponivel(horarioAtendimentoId);
+    }
+
+    public void ocuparHorario(int horarioAtendimentoId, Connection connection) {
+        this.horarioAtendimentoRepository.ocuparHorario(horarioAtendimentoId, connection);
     }
 }
