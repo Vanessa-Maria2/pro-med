@@ -1,0 +1,28 @@
+<!-- layout.component.html -->
+<div class="layout-container">
+  <mat-toolbar class="navbar-vertical">
+  <div class="toolbar-header">
+    <img src="assets/logo.png" alt="Logo do sistema" class="logo" />
+
+    <button mat-button routerLink="/dashboard">
+      <mat-icon>dashboard</mat-icon>
+    </button>
+
+    <button mat-button routerLink="/agenda" routerLinkActive="active">
+      <mat-icon>today</mat-icon>
+    </button>
+
+    <button mat-button routerLink="/servicos" routerLinkActive="active">
+      <mat-icon>medical_services</mat-icon>
+    </button>
+
+    <button mat-button>
+      <mat-icon>settings</mat-icon>
+    </button>
+  </div>
+</mat-toolbar>
+
+<div class="content">
+     <router-outlet></router-outlet>
+
+</div>

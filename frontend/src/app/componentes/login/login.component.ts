@@ -10,7 +10,8 @@ import { HttpClient } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { UserService, LoggedInUser } from '../../services/user.service';
+import { UserService } from '../../services/user.service';
+import { PessoaType } from '../../models/pessoaType';
 
 @Component({
   selector: 'app-login',
@@ -28,15 +29,20 @@ export class LoginComponent {
               private userService: UserService) {}
 
   login() {
-    this.http.post(this.apiUrl, this.loginData).subscribe({
+    this.http.post<PessoaType>(this.apiUrl, this.loginData).subscribe({
           next: (response) => {
-            console.log('Login com sucesso:', response);
-             const mockUser: LoggedInUser = {
-              nome: 'João Paciente', // Nome que aparecerá na Home
-              tipo: 'paciente'      // Tipo do usuário para testar a Home do Paciente
+            const user: PessoaType = {
+              cpf: response.cpf,
+              nome: response.nome,
+              sobrenome: response.sobrenome,
+              email: response.email,
+              endereco: response.endereco,
+              dataNascimento: response.dataNascimento ? new Date(response.dataNascimento) : null,
+              senha: response.senha,
+              tipo: response.tipo,
+              telefones: response.telefones
             };
-            
-            this.userService.setLoggedInUser(mockUser);
+            this.userService.setLoggedInUser(user);
             this.router.navigate(['/home']);
           },
           error: (error) => {

@@ -1,14 +1,21 @@
-// import { Routes } from '@angular/router';
-
-// export const routes: Routes = [];
 import { Routes } from '@angular/router';
 import { LoginComponent } from './componentes/login/login.component';
 import { CadastroUsuarioComponent } from './componentes/cadastro-usuario/cadastro-usuario.component';
 import { HomeComponent } from './componentes/home/home.component';
+import { DashboardComponent } from './componentes/dashboard/dashboard.component';
 
 export const routes: Routes = [
-    { path: 'login', component: LoginComponent }, // Rota existente para o login
-    { path: 'cadastro', component: CadastroUsuarioComponent }, // Nova rota para o cadastro
-    { path: '', redirectTo: '/login', pathMatch: 'full' }, // Redireciona para login como padrão
-    { path: 'home', component: HomeComponent}
+  { path: 'login', component: LoginComponent },
+  { path: 'cadastro', component: CadastroUsuarioComponent },
+  { 
+    path: '', 
+    component: HomeComponent, 
+    children: [
+      { path: 'home', component: DashboardComponent },
+      { path: 'dashboard', component: DashboardComponent },
+      { path: '', redirectTo: '/dashboard', pathMatch: 'full' }
+    ]
+  },
+  { path: '**', redirectTo: 'login' }
+
 ];

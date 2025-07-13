@@ -2,39 +2,35 @@
 import { Injectable, PLATFORM_ID, Inject } from '@angular/core'; 
 import { isPlatformBrowser } from '@angular/common'; 
 import { BehaviorSubject, Observable } from 'rxjs';
-
-export interface LoggedInUser {
-  nome: string;
-  tipo: string;
-}
+import { PessoaType } from '../models/pessoaType';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private currentUserSubject: BehaviorSubject<LoggedInUser | null>;
-  public currentUser: Observable<LoggedInUser | null>;
+  private currentUserSubject: BehaviorSubject<PessoaType | null>;
+  public currentUser: Observable<PessoaType | null>;
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {
-    let storedUser: LoggedInUser | null = null;
+    let storedUser: PessoaType | null = null;
     if (isPlatformBrowser(this.platformId)) {
       const user = localStorage.getItem('loggedInUser');
       if (user) {
         storedUser = JSON.parse(user);
       }
     }
-    this.currentUserSubject = new BehaviorSubject<LoggedInUser | null>(storedUser);
+    this.currentUserSubject = new BehaviorSubject<PessoaType | null>(storedUser);
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
-  setLoggedInUser(user: LoggedInUser): void {
+  setLoggedInUser(user: PessoaType): void {
     if (isPlatformBrowser(this.platformId)) {
       localStorage.setItem('loggedInUser', JSON.stringify(user));
     }
     this.currentUserSubject.next(user);
   }
 
-  getLoggedInUser(): LoggedInUser | null {
+  getLoggedInUser(): PessoaType | null {
     return this.currentUserSubject.value;
   }
 

@@ -1,14 +1,38 @@
-<mat-toolbar color="primary" class="navbar">
-  <span>ProMed</span>
-  <span class="spacer"></span>
-  <span *ngIf="loggedInUser">Bem-vindo(a), {{loggedInUser.nome}}</span>
+<!-- layout.component.html -->
+<div class="layout-container">
+  <mat-toolbar class="navbar-vertical">
+  <div class="toolbar-header">
+    <img src="assets/logo.png" alt="Logo do sistema" class="logo" />
+
+    <button mat-button routerLink="/dashboard">
+      <mat-icon>dashboard</mat-icon>
+    </button>
+
+    <button mat-button routerLink="/agenda" routerLinkActive="active">
+      <mat-icon>today</mat-icon>
+    </button>
+
+    <button mat-button routerLink="/servicos" routerLinkActive="active">
+      <mat-icon>medical_services</mat-icon>
+    </button>
+
+    <button mat-button>
+      <mat-icon>settings</mat-icon>
+    </button>
+  </div>
 </mat-toolbar>
 
+<div class="content">
+     <router-outlet></router-outlet>
+
+</div>
+
+<!--
 <div class="home-content">
   <h2>Seu Prontuário Médico Simplificado</h2>
   <p>Aqui você pode ver suas informações de saúde e agendar novas consultas.</p>
 
-  <div *ngIf="loggedInUser && loggedInUser.tipo === 'paciente'">
+  <div *ngIf="loggedInUser && loggedInUser.tipo === 'médico'">
     <div class="card">
       <h3>Próximas Ações Importantes</h3>
       <button mat-raised-button color="accent" class="action-button" (click)="agendarConsulta()">
@@ -43,4 +67,4 @@
         <p>Aqui aparecerá o conteúdo específico para o perfil de {{loggedInUser.tipo}}. Você pode expandir esta seção.</p>
         </div>
   </div>
-</div>
+</div>-->

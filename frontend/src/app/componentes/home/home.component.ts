@@ -6,7 +6,11 @@ import { CommonModule } from '@angular/common';
 import { MatListModule } from '@angular/material/list'; 
 import { MatCardModule } from '@angular/material/card'; 
 import { MatDividerModule } from '@angular/material/divider'; 
-import { UserService, LoggedInUser } from '../../services/user.service'; 
+import { UserService } from '../../services/user.service'; 
+import { PessoaType } from '../../models/pessoaType';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
 
 
 // Interface para um agendamento (modelo mock)
@@ -25,15 +29,17 @@ interface Agendamento {
     MatButtonModule,
     MatIconModule,
     CommonModule,
-    MatListModule,      
-    MatCardModule,      
-    MatDividerModule    
-  ],
+    MatListModule,
+    MatCardModule,
+    MatDividerModule,
+    MatSidenavModule,
+    RouterModule
+],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
 export class HomeComponent implements OnInit { 
-  loggedInUser: LoggedInUser | null = null; 
+  loggedInUser: PessoaType | null = null; 
 
   // Dados mockados de agendamentos para o Paciente
   agendamentos: Agendamento[] = [
