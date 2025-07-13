@@ -26,9 +26,9 @@ public class TelefoneRepository {
             PreparedStatement ps = connection.prepareStatement(sql);
 
             for (Telefone telefone : pessoa.getTelefones()) {
-                 ps.setString(1, telefone.getNumero());
+                 ps.setString(1, telefone.getDescricao());
                  ps.setString(2, pessoa.getCpf());
-                 ps.executeUpdate();
+                 ps.execute();
             }
             databaseConnection.closeConnection();
         } catch (SQLException e) {

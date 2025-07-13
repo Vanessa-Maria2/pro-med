@@ -1,0 +1,203 @@
+<div class="login-container">
+  <div class="left-side">
+        <img src="assets/imagem.png" alt="Imagem ilustrativa" class="login-image"  />
+  </div>
+
+  <div class="right-side">
+    <div class="logo-completo">
+        <img src="assets/logo.png" alt="Logo do sistema" class="logo-imagem" />
+        <div class="textos">
+            <h2>ProMed</h2>
+            <h2 class="barra"></h2>
+            <p>Prontuário Médico</p>
+        </div>
+    </div>
+
+    <form class="login-form" (ngSubmit)="cadastrarUsuario()" #cadastroForm="ngForm">
+      <div class="form-row">
+        <mat-form-field appearance="fill" class="form-field-triple">
+          <mat-label>CPF</mat-label>
+          <input matInput name="cpf" [(ngModel)]="cadastroData.pessoa.cpf" required placeholder="Digite seu CPF"
+                 mask="000.000.000-00" appCpfValidator #cpf="ngModel" />
+          <mat-error *ngIf="cpf.invalid && cpf.touched">
+            <small *ngIf="cpf.errors?.['required']">CPF é obrigatório</small>
+            <small *ngIf="cpf.errors?.['cpfInvalido']">CPF inválido</small>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="form-field-triple">
+          <mat-label>Nome</mat-label>
+          <input matInput name="nome" [(ngModel)]="cadastroData.pessoa.nome" required placeholder="Digite seu nome" #nome="ngModel" />
+          <mat-error *ngIf="nome.invalid && nome.touched">
+            <small *ngIf="nome.errors?.['required']">Nome é obrigatório</small>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="form-field-triple">
+          <mat-label>Sobrenome</mat-label>
+          <input matInput name="sobrenome" [(ngModel)]="cadastroData.pessoa.sobrenome" required placeholder="Digite seu sobrenome" #sobrenome="ngModel" />
+          <mat-error *ngIf="sobrenome.invalid && sobrenome.touched">
+            <small *ngIf="sobrenome.errors?.['required']">Sobrenome é obrigatório</small>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field appearance="fill" class="form-field-pair">
+          <mat-label>Email</mat-label>
+          <input matInput name="email" [(ngModel)]="cadastroData.pessoa.email" email required placeholder="Digite seu email" #email="ngModel" />
+          <mat-error *ngIf="email.invalid && email.touched">
+            <small *ngIf="email.errors?.['required']">Email é obrigatório</small>
+            <small *ngIf="email.errors?.['email']">Email inválido</small>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="form-field-pair">
+          <mat-label>Endereço</mat-label>
+          <input matInput name="endereco" [(ngModel)]="cadastroData.pessoa.endereco" required placeholder="Digite seu endereço" #endereco="ngModel" />
+          <mat-error *ngIf="endereco.invalid && endereco.touched">
+            <small *ngIf="endereco.errors?.['required']">Endereço é obrigatório</small>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field appearance="fill" class="form-field-triple">
+          <mat-label>Data de Nascimento</mat-label>
+          <input matInput [matDatepicker]="picker" name="dataNascimento" [(ngModel)]="cadastroData.pessoa.dataNascimento" required #dataNascimento="ngModel" />
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="dataNascimento.invalid && dataNascimento.touched">
+            <small *ngIf="dataNascimento.errors?.['required']">Data de Nascimento é obrigatória</small>
+          </mat-error>
+        </mat-form-field>
+
+          <mat-form-field appearance="fill" class="form-field-pair">
+          <mat-label>Senha</mat-label>
+          <input matInput name="senha" [type]="hidePassword ? 'password' : 'text'"
+                 placeholder="Digite sua senha" [(ngModel)]="cadastroData.pessoa.senha"
+                 minlength="6" maxlength="10" required #senha="ngModel" />
+          <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword"
+                  [attr.aria-label]="'Alternar visibilidade da senha'"
+                  [attr.aria-pressed]="!hidePassword">
+            <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error *ngIf="senha.invalid && senha.touched">
+            <small *ngIf="senha.errors?.['required']">Senha é obrigatória</small>
+            <small *ngIf="senha.errors?.['minlength']">Senha deve ter no mínimo 6 caracteres</small>
+            <small *ngIf="senha.errors?.['maxlength']">Senha deve ter no máximo 10 caracteres</small>
+          </mat-error>
+        </mat-form-field>
+
+        <app-campo [(itens)]="itensTelefones" [nomeCampo]="'Telefone'"   [mask]="'(00) 00000-0000'"></app-campo>
+      </div>
+
+
+      <div class="form-row">
+        <mat-form-field appearance="fill" class="full-width"> <mat-label>Tipo de Usuário</mat-label>
+          <mat-select name="tipoUsuario" [(ngModel)]="cadastroData.pessoa.tipo" required #tipoUsuario="ngModel" (selectionChange)="onTipoUsuarioChange($event.value)">
+            <mat-option *ngFor="let type of userTypes" [value]="type">
+              {{type | titlecase}} </mat-option>
+          </mat-select>
+          <mat-error *ngIf="tipoUsuario.invalid && tipoUsuario.touched">
+            <small *ngIf="tipoUsuario.errors?.['required']">Selecione um tipo de usuário</small>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div *ngIf="cadastroData.pessoa.tipo === 'médico'" class="form-row-dynamic">
+        <div class="form-row">
+          <mat-form-field appearance="fill" class="form-field-triple">
+            <mat-label>Número CRM</mat-label>
+            <input matInput name="numCrm" [(ngModel)]="cadastroData.medico.numCrm" required #numCrm="ngModel" />
+            <mat-error *ngIf="numCrm.invalid && numCrm.touched">
+              <small *ngIf="numCrm.errors?.['required']">CRM é obrigatório para Médico</small>
+            </mat-error>
+          </mat-form-field>
+
+         <mat-form-field appearance="fill" class="form-field-triple">
+            <mat-label>UF CRM</mat-label>
+            <input matInput name="ufCrm" [(ngModel)]="cadastroData.medico.ufCrm" required #ufCrm="ngModel" />
+            <mat-error *ngIf="ufCrm.invalid && ufCrm.touched">
+              <small *ngIf="ufCrm.errors?.['required']">CRM é obrigatório para Médico</small>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="form-field-triple">
+            <mat-label>Especialidades</mat-label>
+            <mat-select [formControl]="especialidades" multiple>
+              @for (especialidade of especialidadesList; track especialidade) {
+                <mat-option [value]="especialidade">{{especialidade.descricao}}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+
+          <app-campo [(itens)]="itensFormacoes" [nomeCampo]="'Formação'"></app-campo>
+
+        </div>
+        </div>
+
+      <div *ngIf="cadastroData.pessoa.tipo === 'paciente'" class="form-row-dynamic">
+        <div class="form-row">
+          <mat-form-field appearance="fill" class="form-field-triple">
+            <mat-label>Tipo Sanguíneo</mat-label>
+            <input matInput name="tipoSanguineo" [(ngModel)]="cadastroData.paciente.tipoSanguineo" required #tipoSanguineo="ngModel" />
+            <mat-error *ngIf="tipoSanguineo.invalid && tipoSanguineo.touched">
+              <small *ngIf="tipoSanguineo.errors?.['required']">Tipo Sanguíneo é obrigatório</small>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="form-field-triple">
+            <mat-label>RH Sanguíneo</mat-label>
+            <input matInput name="rhSanguineo" [(ngModel)]="cadastroData.paciente.rhSanguineo" required #rhSanguineo="ngModel" />
+            <mat-error *ngIf="rhSanguineo.invalid && rhSanguineo.touched">
+              <small *ngIf="rhSanguineo.errors?.['required']">RH Sanguíneo é obrigatório</small>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="form-field-triple">
+            <mat-label>Peso (kg)</mat-label>
+            <input matInput type="number" name="peso" [(ngModel)]="cadastroData.paciente.peso" required #peso="ngModel" />
+            <mat-error *ngIf="peso.invalid && peso.touched">
+              <small *ngIf="peso.errors?.['required']">Peso é obrigatório</small>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="form-field">
+            <mat-label>Altura (cm)</mat-label>
+            <input matInput type="number" name="altura" [(ngModel)]="cadastroData.paciente.altura" required #altura="ngModel" />
+            <mat-error *ngIf="altura.invalid && altura.touched">
+              <small *ngIf="altura.errors?.['required']">Altura é obrigatória</small>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="form-field-triple">
+            <mat-label>Histórico familiar de doenças</mat-label>
+            <textarea matInput placeholder="..." [(ngModel)]="cadastroData.paciente.historicoFamiliaDoencas" #historicoFamiliaDoencas="ngModel" ></textarea>
+          </mat-form-field>
+        </div>
+        <div class="form-row">
+          <mat-form-field class="form-field-pair">
+              <mat-label>Alergias</mat-label>
+              <mat-select [formControl]="alergias" multiple [(ngModel)]="alergias">
+                @for (alergia of alergiasList; track alergia) {
+                  <mat-option [value]="alergia">{{alergia.descricao}}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+
+          <mat-form-field class="form-field-pair">
+              <mat-label>Doenças</mat-label>
+              <mat-select [formControl]="doencas" multiple [(ngModel)]="doencas">
+                @for (doenca of doencasList; track doenca) {
+                  <mat-option [value]="doenca">{{doenca.descricao}}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+  <button mat-button type="submit" class="btn">Cadastrar</button>
+    </form>
+  </div>
+</div>

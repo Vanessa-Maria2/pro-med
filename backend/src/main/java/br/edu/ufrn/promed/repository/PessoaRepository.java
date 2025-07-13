@@ -28,6 +28,9 @@ public class PessoaRepository {
     public void cadastro(Pessoa pessoa) {
         String sql = "INSERT INTO pessoa (cpf, nome, sobrenome, email, endereco, data_nascimento, senha, ativo) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
+        if (existePessoa(pessoa)) {
+            throw new RuntimeException("Já existe pessoa cadastrada com este email ou cpf");
+        }
         try {
             Connection connection = databaseConnection.getConnection();
             PreparedStatement ps = connection.prepareStatement(sql);
@@ -47,14 +50,14 @@ public class PessoaRepository {
 
             this.telefoneRepository.cadastroTelefone(pessoa);
 
-            if (pessoa.getTipo().equals("Recepcionista"))
+            if (pessoa.getTipo().equals("recepcionista"))
                 this.recepcionistaRepository.cadastro(pessoa);
 
-            if(pessoa.getTipo().equals("Gerente"))
+            if(pessoa.getTipo().equals("gerente"))
                 this.gerenteRepository.cadastro(pessoa);
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Erro cadastrar pessoa");
         }
     }
 
@@ -99,7 +102,7 @@ public class PessoaRepository {
         }
     }
 
-    public void deslogar(String cpf) {
+    public void inativar(String cpf) {
         String sql = "UPDATE pessoa SET ativo = ? WHERE cpf = ?";
 
         try (
@@ -113,5 +116,26 @@ public class PessoaRepository {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public boolean existePessoa(Pessoa pessoa) {
+        String sql = "SELECT COUNT(*) FROM pessoa WHERE email = ?  OR cpf = ?";
+        try {
+            Connection connection = databaseConnection.getConnection();
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, pessoa.getEmail());
+            ps.setString(2, pessoa.getCpf());
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                int count = rs.getInt(1);
+                if (count > 0) {
+                    return true;
+                }
+            }
+            databaseConnection.closeConnection();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return false;
     }
 }

@@ -56,7 +56,7 @@ public class MedicoRepository {
                 especialidadeRepository.cadastrarEspecialidade(medico);
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Erro ao cadastrar médico");
         }
     }
 

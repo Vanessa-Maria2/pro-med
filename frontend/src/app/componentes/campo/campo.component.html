@@ -1,0 +1,34 @@
+<div *ngFor="let iten of itens; let i = index" >
+  <mat-form-field appearance="fill" style="flex: 1; margin-right: 8px;">
+    <mat-label>Descrição da  {{ nomeCampo.toLowerCase() }}</mat-label>
+    <input
+      matInput
+      [(ngModel)]="itens[i].descricao"
+      (ngModelChange)="atualizarDescricao(i, $event)" [mask]="mask"/>
+  </mat-form-field>
+
+  <button
+    mat-mini-fab
+    color="primary"
+    (click)="remover(i)"
+    matTooltip="Remover {{ nomeCampo.toLowerCase() }}"
+    aria-label="Remover"
+    type="button">
+    <mat-icon>remove_circle</mat-icon>
+  </button>
+</div>
+
+<div class="btn">
+  <button
+    mat-mini-fab
+    color="primary"
+    (click)="adicionar()"
+    matTooltip="Adicionar nova {{nomeCampo}}"
+    aria-label="Adicionar"
+    type="button">
+    <mat-icon>add</mat-icon>
+  </button>
+  <span style="font-weight: 500;">Adicionar {{nomeCampo}}</span>
+</div>
+
+ 

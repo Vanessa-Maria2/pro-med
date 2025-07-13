@@ -28,7 +28,7 @@ public class GrupoRecorrenciaRepository {
             ps.executeUpdate();
             return buscarPorId(connection, grupoRecorrencia.getDescricao());
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Erro ao cadastrar grupo de recorrência");
         }
     }
 
@@ -45,7 +45,7 @@ public class GrupoRecorrenciaRepository {
                 grupoRecorrencia.setDescricao(rs.getString("descricao"));
             }
         }  catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Erro ao buscar recorrência");
         }
         return grupoRecorrencia;
     }
