@@ -5,7 +5,7 @@ import { CadastroUsuarioComponent } from './componentes/cadastro-usuario/cadastr
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, LoginComponent, CadastroUsuarioComponent],
+  imports: [RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
