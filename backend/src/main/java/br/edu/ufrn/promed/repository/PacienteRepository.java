@@ -50,7 +50,7 @@ public class PacienteRepository {
                 doencaRepository.paciente_has_doenca(paciente);
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Erro ao cadastrar paciente");
         }
     }
 }

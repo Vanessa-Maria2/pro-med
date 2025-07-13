@@ -25,7 +25,7 @@ public class ReceitaRepository {
                 ps.execute();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException("Erro ao cadastrar receita", e);
         }
     }
 }

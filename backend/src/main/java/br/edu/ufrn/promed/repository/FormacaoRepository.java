@@ -34,7 +34,7 @@ public class FormacaoRepository {
             }
             databaseConnection.closeConnection();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Erro ao cadastrar formação");
         }
     }
 }
