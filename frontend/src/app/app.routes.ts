@@ -2,8 +2,9 @@
 
 // export const routes: Routes = [];
 import { Routes } from '@angular/router';
-import { CadastroUsuarioComponent } from './pages/cadastro-usuario/cadastro-usuario.component'; // Importe o novo componente
+// Importe o novo componente
 import { LoginComponent } from './componentes/login/login.component'; // Já existe, apenas para referência
+import { CadastroUsuarioComponent } from './componentes/cadastro-usuario/cadastro-usuario.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent }, // Rota existente para o login
