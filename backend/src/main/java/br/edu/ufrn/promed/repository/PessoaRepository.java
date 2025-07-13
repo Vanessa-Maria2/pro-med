@@ -47,10 +47,10 @@ public class PessoaRepository {
 
             this.telefoneRepository.cadastroTelefone(pessoa);
 
-            if (pessoa.getTipo().equals("Recepcionista"))
+            if (pessoa.getTipo().equals("recepcionista"))
                 this.recepcionistaRepository.cadastro(pessoa);
 
-            if(pessoa.getTipo().equals("Gerente"))
+            if(pessoa.getTipo().equals("gerente"))
                 this.gerenteRepository.cadastro(pessoa);
 
         } catch (SQLException e) {
