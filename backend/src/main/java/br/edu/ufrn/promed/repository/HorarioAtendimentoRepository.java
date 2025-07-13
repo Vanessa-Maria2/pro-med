@@ -49,7 +49,7 @@ public class HorarioAtendimentoRepository {
             }
             databaseConnection.closeConnection();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Erro ao buscar horários de atendimentos disponíveis.");
         }
         return horarioAtendimentos;
     }
@@ -89,7 +89,7 @@ public class HorarioAtendimentoRepository {
             }
             databaseConnection.closeConnection();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Erro ao buscar horários atendimentos por médico");
         }
 
         return horarioAtendimentos;

@@ -26,7 +26,7 @@ public class GerenteRepository {
             ps.execute();
             databaseConnection.closeConnection();
         } catch (Exception e) {
-            e.printStackTrace();
+           throw new RuntimeException("Erro ao cadastrar gerente");
         }
     }
 }

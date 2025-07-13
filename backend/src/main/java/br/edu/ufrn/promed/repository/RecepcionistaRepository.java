@@ -26,7 +26,7 @@ public class RecepcionistaRepository {
             ps.setString(1, pessoa.getCpf());
             ps.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Erro ao cadastrar recepcionista", e);
         }
     }
 }
