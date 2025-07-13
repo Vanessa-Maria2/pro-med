@@ -129,4 +129,22 @@ public class HorarioAtendimentoRepository {
             e.printStackTrace();
         }
     }
+
+    public int liberarHorario(int horarioAtendimentoId, String pacienteCpf) {
+        String sql = "UPDATE horario_atendimento h SET h.status = 'DISPONIVEL', paciente_cpf = NULL " +
+                "WHERE id = ? AND paciente_cpf = ?";
+
+        try (Connection connection = databaseConnection.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            ps.setInt(1, horarioAtendimentoId);
+            ps.setString(2, pacienteCpf);
+            ps.setInt(1, horarioAtendimentoId);
+            ps.setString(2, pacienteCpf);
+
+            return ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
