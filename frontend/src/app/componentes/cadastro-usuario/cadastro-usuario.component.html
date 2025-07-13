@@ -89,9 +89,7 @@
           </mat-error>
         </mat-form-field>
 
-        <app-formacao [(itens)]="itensTelefones" [nomeCampo]="'Telefone'"></app-formacao>
-
-
+        <app-campo [(itens)]="itensTelefones" [nomeCampo]="'Telefone'"   [mask]="'(00) 00000-0000'"></app-campo>
       </div>
 
 
@@ -134,7 +132,7 @@
             </mat-select>
           </mat-form-field>
 
-          <app-formacao [(itens)]="itensFormacoes" [nomeCampo]="'Formação'"></app-formacao>
+          <app-campo [(itens)]="itensFormacoes" [nomeCampo]="'Formação'"></app-campo>
 
         </div>
         </div>

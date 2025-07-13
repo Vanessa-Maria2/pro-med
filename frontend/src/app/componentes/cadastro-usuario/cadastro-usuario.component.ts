@@ -11,7 +11,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { UsuarioType } from '../../models/UsuarioType';
-import { FormacaoComponent } from "../formacao/formacao.component";
 import { FormacaoType } from '../../models/formacaoType';
 import { HttpClient } from '@angular/common/http';
 import { EspecialidadeType } from '../../models/especialidadeType';
@@ -23,6 +22,7 @@ import { PacienteType } from '../../models/pacienteType';
 import { DoencaType } from '../../models/doencaType';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { CampoComponent } from '../campo/campo.component';
 
 
 @Component({
@@ -39,7 +39,7 @@ import { Router } from '@angular/router';
     MatSelectModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    ReactiveFormsModule, FormacaoComponent],
+    ReactiveFormsModule, CampoComponent],
   templateUrl: './cadastro-usuario.component.html',
   styleUrl: './cadastro-usuario.component.css',
 })

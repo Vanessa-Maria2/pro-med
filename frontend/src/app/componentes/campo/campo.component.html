@@ -4,7 +4,7 @@
     <input
       matInput
       [(ngModel)]="itens[i].descricao"
-      (ngModelChange)="atualizarDescricao(i, $event)"/>
+      (ngModelChange)="atualizarDescricao(i, $event)" [mask]="mask"/>
   </mat-form-field>
 
   <button

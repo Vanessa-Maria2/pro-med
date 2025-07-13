@@ -5,26 +5,27 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-
-import { FormacaoType } from '../../models/formacaoType';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { NgxMaskDirective } from 'ngx-mask';
 
 @Component({
-  selector: 'app-formacao',
+  selector: 'app-campo',
   imports: [CommonModule,
     FormsModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
     MatIconModule,
-    MatTooltipModule
+    MatTooltipModule,
+    NgxMaskDirective
   ],
-  templateUrl: './formacao.component.html',
-  styleUrl: './formacao.component.css'
+  templateUrl: './campo.component.html',
+  styleUrl: './campo.component.css'
 })
-export class FormacaoComponent {
+export class CampoComponent {
   @Input() itens:{ descricao: string }[] = [];
   @Output() itensChange = new EventEmitter<{ descricao: string }[]>();
+  @Input() mask?: string;
 
   @Input() nomeCampo = 'Item';
 
