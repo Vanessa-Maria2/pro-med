@@ -30,8 +30,8 @@ public class PessoaService {
         return pessoaRepository.findByEmail(email);
     }
 
-    public void deslogar(String cpf){
-        pessoaRepository.deslogar(cpf);
+    public void inativar(String cpf){
+        pessoaRepository.inativar(cpf);
     }
 
 }

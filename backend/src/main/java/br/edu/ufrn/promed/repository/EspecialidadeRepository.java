@@ -5,9 +5,13 @@ import br.edu.ufrn.promed.model.Especialidade;
 import br.edu.ufrn.promed.model.Medico;
 import org.springframework.stereotype.Repository;
 
+import javax.xml.transform.Result;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class EspecialidadeRepository {
@@ -35,5 +39,29 @@ public class EspecialidadeRepository {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public List<Especialidade> listarTodasEspecialidades() {
+        List<Especialidade> especialidades = new ArrayList<>();
+        String sql = "select id, descricao from especialidade";
+
+        try{
+            Connection connection = databaseConnection.getConnection();
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()){
+                Especialidade especialidade = new Especialidade();
+
+                especialidade.setId(rs.getInt("id"));
+                especialidade.setDescricao(rs.getString("descricao"));
+                especialidades.add(especialidade);
+            }
+            connection.close();
+        } catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+
+        return especialidades;
     }
 }

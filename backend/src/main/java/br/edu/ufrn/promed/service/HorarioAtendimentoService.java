@@ -21,6 +21,11 @@ public class HorarioAtendimentoService {
         return this.horarioAtendimentoRepository.buscarTodas();
     }
 
+    public List<HorarioAtendimentoResponseDto> buscarPorMedico(String Medico_cpf) {
+        List<HorarioAtendimentoResponseDto> horaraioDtoList = horarioAtendimentoRepository.buscarPorMedico(Medico_cpf);
+        return horaraioDtoList;
+    }
+  
     public boolean isHorarioAtendimentoDisponivel(int horarioAtendimentoId) {
         return this.horarioAtendimentoRepository.isHorarioAtendimentoDisponivel(horarioAtendimentoId);
     }

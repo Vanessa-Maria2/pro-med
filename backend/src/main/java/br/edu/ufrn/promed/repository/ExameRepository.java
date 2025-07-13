@@ -37,7 +37,7 @@ public class ExameRepository {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException("Erro ao cadastrar consulta");
         }
     }
 
@@ -61,7 +61,7 @@ public class ExameRepository {
             }
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Erro ao buscar consulta");
         }
         return retorno;
     }

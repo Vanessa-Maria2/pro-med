@@ -2,14 +2,14 @@ package br.edu.ufrn.promed.model;
 
 public class Telefone {
 
-    private String numero;
+    private String descricao;
 
-    public String getNumero() {
-        return numero;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public void setNumero(String numero) {
-        this.numero = numero;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
 }

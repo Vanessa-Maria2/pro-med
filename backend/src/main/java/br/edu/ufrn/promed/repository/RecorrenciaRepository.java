@@ -67,7 +67,7 @@ public class RecorrenciaRepository {
             }
         } catch (Exception e) {
             connection.rollback();
-            throw e;
+            throw new IllegalArgumentException("Erro ao cadastrar recorrência para horário de atendimento");
         } finally {
             connection.commit();
             databaseConnection.closeConnection();
@@ -84,7 +84,7 @@ public class RecorrenciaRepository {
         for(LocalDate data: datas) {
             boolean existe = isHorarioOcupado(connection, recorrencia, recorrenciaRequestDto, data);
             if(existe) {
-                throw new SQLIntegrityConstraintViolationException("Horário de atendimento já existe") ;
+                throw new IllegalArgumentException("Horário de atendimento não está disponível") ;
             }
             preparedStatement.setString(1, "DISPONIVEL");
             Time horaInicioDate = recorrencia.getHora_inicio();

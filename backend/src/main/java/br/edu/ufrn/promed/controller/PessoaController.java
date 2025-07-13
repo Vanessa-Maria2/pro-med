@@ -1,6 +1,7 @@
 package br.edu.ufrn.promed.controller;
 
 import br.edu.ufrn.promed.dto.request.LoginRequestDto;
+import br.edu.ufrn.promed.dto.response.PessoaResponseDto;
 import br.edu.ufrn.promed.model.Pessoa;
 import br.edu.ufrn.promed.dto.request.PessoaRequestDto;
 import br.edu.ufrn.promed.service.AuthService;
@@ -28,23 +29,22 @@ public class PessoaController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginRequestDto loginRequestDto){
+    public ResponseEntity<PessoaResponseDto> login(@RequestBody LoginRequestDto loginRequestDto){
         if (loginRequestDto.getEmail() == null || loginRequestDto.getPassword() == null){
-            return ResponseEntity.badRequest().body("Email e senha são obrigatórios");
+            throw new RuntimeException("Email e senha são obrigatórios");
         }
 
-        boolean isAuthenticated = authService.authenticate(loginRequestDto);
-
-        if(isAuthenticated){
-            return ResponseEntity.ok("Login bem-sucessido!");
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciais inválidas.");
+        try {
+            PessoaResponseDto pessoa = authService.authenticate(loginRequestDto);
+            return ResponseEntity.ok(pessoa);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
 
     @PutMapping("/deslogar/{cpf}")
     public ResponseEntity<Void> deslogar(@PathVariable String cpf){
-        pessoaService.deslogar(cpf);
+        pessoaService.inativar(cpf);
         return ResponseEntity.noContent().build();
     }
 }
