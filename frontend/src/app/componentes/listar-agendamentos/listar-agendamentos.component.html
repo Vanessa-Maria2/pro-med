@@ -1,0 +1,26 @@
+<div class="card">
+  <h3>Seus Agendamentos</h3>
+  <div class="card-actions">
+    <button mat-button color="primary" class="action-button" (click)="agendarConsulta()">
+      <mat-icon>event</mat-icon> Agendar Consulta
+    </button>
+  </div>
+</div>
+
+<div class="card patient-appointments-card">
+  <mat-list *ngIf="agendamentos.length > 0; else noAppointments">
+    <mat-list-item *ngFor="let agendamento of agendamentos">
+      <mat-icon matListItemIcon>event_note</mat-icon>
+      <div matListItemTitle class="mat-list-item-title">
+        {{agendamento.especialidade}} - Dr(a). {{agendamento.medico}}
+      </div>
+      <div matListItemLine class="mat-list-item-title">
+        Data: {{agendamento.data}} | Horário: {{agendamento.horario}}
+      </div>
+      <mat-divider></mat-divider>
+    </mat-list-item>
+  </mat-list>
+  <ng-template #noAppointments>
+    <p>Você ainda não possui agendamentos.</p>
+  </ng-template>
+</div>
