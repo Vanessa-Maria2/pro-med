@@ -7,6 +7,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card'; 
 import { MatDividerModule } from '@angular/material/divider'; 
 import { UserService, LoggedInUser } from '../../services/user.service'; 
+import { Router } from '@angular/router';
 
 
 // Interface para um agendamento (modelo mock)
@@ -42,7 +43,7 @@ export class HomeComponent implements OnInit {
     { especialidade: 'Odontologia', medico: 'Dra. Carla Souza', data: '2025-08-10', horario: '09:15' },
   ];
 
-  constructor(private userService: UserService) {} 
+  constructor(private userService: UserService, private router: Router) {} 
 
   ngOnInit(): void {
     // Assina o Observable para obter as informações do usuário logado
@@ -54,13 +55,13 @@ export class HomeComponent implements OnInit {
 
   // Método placeholder para a função de agendar consulta
   agendarConsulta(): void {
-    console.log('Navegar para a página de agendamento de consulta...');
-    // this.router.navigate(['/agendar-consulta']);
+    console.log('Navegando para a página de agendamento de consulta...');
+    this.router.navigate(['/agendar-consulta']); 
   }
 
   // Método para fazer logout 
   logout(): void {
     this.userService.logout();
-    // this.router.navigate(['/login']); // Redireciona para o login após o logout
+    // this.router.navigate(['/login']); 
   }
 }

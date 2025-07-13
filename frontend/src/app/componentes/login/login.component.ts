@@ -35,7 +35,6 @@ export class LoginComponent {
               nome: 'João Paciente', // Nome que aparecerá na Home
               tipo: 'paciente'      // Tipo do usuário para testar a Home do Paciente
             };
-            
             this.userService.setLoggedInUser(mockUser);
             this.router.navigate(['/home']);
           },

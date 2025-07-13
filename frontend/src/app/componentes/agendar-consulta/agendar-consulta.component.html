@@ -1,0 +1,63 @@
+<div class="agendamento-container">
+  <mat-card class="agendamento-card">
+    <mat-card-title>Agendar Nova Consulta</mat-card-title>
+    <mat-card-content>
+      <form class="agendamento-form">
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Especialidade</mat-label>
+          <mat-select [(ngModel)]="selectedSpecialtyId" name="specialty" required
+                      (selectionChange)="onSpecialtyChange()" #specialtySelect="ngModel"> <mat-option *ngFor="let specialty of specialties" [value]="specialty.id">
+              {{specialty.nome}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="specialtySelect.invalid && specialtySelect.touched">Especialidade é obrigatória</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width" *ngIf="selectedSpecialtyId">
+          <mat-label>Médico</mat-label>
+          <mat-select [(ngModel)]="selectedDoctorId" name="doctor" required
+                      (selectionChange)="onDoctorChange()" #doctorSelect="ngModel"> <mat-option *ngFor="let doctor of doctors" [value]="doctor.id">
+              {{doctor.nome}}
+            </mat-option>
+            <mat-option *ngIf="doctors.length === 0" disabled>
+              Nenhum médico disponível nesta especialidade.
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="doctorSelect.invalid && doctorSelect.touched">Médico é obrigatório</mat-error> </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width" *ngIf="selectedDoctorId">
+            <mat-label>Data Disponível</mat-label>
+            <input matInput [matDatepicker]="datePicker" [(ngModel)]="selectedDate" name="selectedDate" required
+                (dateChange)="onDateChange()" #dateSelect="ngModel"> <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+            <mat-datepicker #datePicker></mat-datepicker>
+            <mat-error *ngIf="dateSelect.invalid && dateSelect.touched">Data é obrigatória</mat-error>
+
+            <mat-hint *ngIf="availableDates.length > 0">
+                <span *ngFor="let date of availableDates; let last = last">
+                     {{date | date:'shortDate'}}{{!last ? ', ' : ''}}
+                </span>
+            </mat-hint>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width" *ngIf="selectedDate">
+          <mat-label>Horário Disponível</mat-label>
+          <mat-select [(ngModel)]="selectedTimeSlotId" name="timeSlot" required #timeSlotSelect="ngModel"> <mat-option *ngFor="let slot of availableTimeSlots" [value]="slot.id">
+              {{slot.hora}}
+            </mat-option>
+            <mat-option *ngIf="availableTimeSlots.length === 0 && selectedDoctorId && selectedDate" disabled>
+                Nenhum horário disponível para a data selecionada.
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="timeSlotSelect.invalid && timeSlotSelect.touched">Horário é obrigatório</mat-error> </mat-form-field>
+      </form>
+    </mat-card-content>
+    <mat-card-actions class="card-actions">
+      <button mat-raised-button color="primary" (click)="agendar()"
+              [disabled]="!selectedSpecialtyId || !selectedDoctorId || !selectedDate || !selectedTimeSlotId">
+        Agendar Consulta
+      </button>
+      <button mat-button color="default" (click)="cancel()"> Cancelar
+    </button>
+    </mat-card-actions>
+  </mat-card>
+</div>
