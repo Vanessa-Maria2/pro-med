@@ -1,6 +1,6 @@
-package br.edu.ufrn.promed.model;
+package br.edu.ufrn.promed.dto.response;
 
-public class Doenca {
+public class DoencaResponseDto {
 
     private String cid;
 

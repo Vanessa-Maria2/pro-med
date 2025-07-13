@@ -178,9 +178,25 @@
             <textarea matInput placeholder="..." [(ngModel)]="cadastroData.paciente.historicoFamiliaDoencas" #historicoFamiliaDoencas="ngModel" ></textarea>
           </mat-form-field>
         </div>
+        <div class="form-row">
+          <mat-form-field class="form-field-pair">
+              <mat-label>Alergias</mat-label>
+              <mat-select [formControl]="alergias" multiple [(ngModel)]="alergias">
+                @for (alergia of alergiasList; track alergia) {
+                  <mat-option [value]="alergia">{{alergia.descricao}}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
 
-         <app-formacao [(itens)]="itensAlergias" [nomeCampo]="'Alergia'"></app-formacao>
-
+          <mat-form-field class="form-field-pair">
+              <mat-label>Doenças</mat-label>
+              <mat-select [formControl]="doencas" multiple [(ngModel)]="doencas">
+                @for (doenca of doencasList; track doenca) {
+                  <mat-option [value]="doenca">{{doenca.descricao}}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+          </div>
         </div>
 
   <button mat-button type="submit" class="btn">Cadastrar</button>

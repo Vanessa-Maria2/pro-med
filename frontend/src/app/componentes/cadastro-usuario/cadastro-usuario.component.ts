@@ -20,6 +20,9 @@ import { TelefoneType } from '../../models/telefoneType';
 import { PessoaType } from '../../models/pessoaType';
 import { MedicoType } from '../../models/medicoType';
 import { PacienteType } from '../../models/pacienteType';
+import { DoencaType } from '../../models/doencaType';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -55,6 +58,7 @@ export class CadastroUsuarioComponent {
     },
     paciente: {
       alergias: [],
+      doencas: [],
       historicoFamiliaDoencas: '',
       tipoSanguineo: '',
       peso: undefined,
@@ -72,18 +76,34 @@ export class CadastroUsuarioComponent {
 
   especialidades = new FormControl<EspecialidadeType[]>([]);
 
+
+  alergiasList: AlergiaType[] = [];
+
+  alergias = new FormControl<AlergiaType[]>([]);
+
+  doencasList: DoencaType[] = [];
+
+  doencas = new FormControl<DoencaType[]>([]);
+
   hidePassword = true
   userTypes: string[] = ['médico', 'gerente', 'recepcionista', 'paciente'];
 
   formacoes: FormacaoType[] = [];
-  alergias: AlergiaType[] = [];
   telefones: TelefoneType[] = [];
 
   apiUrl = 'http://localhost:8080/';
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private snackBar: MatSnackBar, private router: Router) {
     this.especialidades.valueChanges.subscribe((lista) => {
       this.cadastroData.medico.especialidades = lista || [];
+    });
+
+     this.alergias.valueChanges.subscribe((lista) => {
+      this.cadastroData.paciente.alergias = lista || [];
+    });
+
+      this.doencas.valueChanges.subscribe((lista) => {
+      this.cadastroData.paciente.doencas = lista || [];
     });
   }
 
@@ -99,8 +119,13 @@ export class CadastroUsuarioComponent {
       };
 
       this.http.post(`${this.apiUrl}medico`, medico).subscribe({
-        next: (response) => console.log('Médico cadastrado com sucesso:', response),
-        error: (error) => console.error('Erro ao cadastrar médico:', error),
+        next: (response) => {
+          this.mensagem('Médico cadastrado com sucesso!', 'sucesso');
+          this.router.navigate(['/login']);
+        },
+        error: (error) => {
+          this.mensagem('Erro ao cadastrar médico!', 'erro');
+        },
       });
 
     } else if (this.cadastroData.pessoa.tipo === 'paciente') {
@@ -110,19 +135,30 @@ export class CadastroUsuarioComponent {
         peso: this.cadastroData.paciente.peso,
         altura: this.cadastroData.paciente.altura,
         historicoFamiliaDoencas: this.cadastroData.paciente.historicoFamiliaDoencas,
-        alergias: this.alergias,
+        alergias: this.cadastroData.paciente.alergias,
+        doencas: this.cadastroData.paciente.doencas,
         pessoaRequestDto: this.cadastroData.pessoa
       };
 
       this.http.post(`${this.apiUrl}paciente`, paciente).subscribe({
-        next: (response) => console.log('Paciente cadastrado com sucesso:', response),
-        error: (error) => console.error('Erro ao cadastrar paciente:', error),
+        next: (response) => {
+          this.mensagem('Paciente cadastrado com sucesso!', 'sucesso');
+          this.router.navigate(['/login']);
+        },
+        error: (error) => {
+          this.mensagem('Erro ao cadastrar paciente!', 'erro');
+        },
       });
 
     } else {
       this.http.post(`${this.apiUrl}pessoa`, this.cadastroData.pessoa).subscribe({
-        next: (response) => console.log('Pessoa cadastrada com sucesso:', response),
-        error: (error) => console.error('Erro ao cadastrar pessoa:', error),
+         next: (response) => {
+          this.mensagem('Usuário cadastrado com sucesso!', 'sucesso');
+          this.router.navigate(['/login']);
+        },
+        error: (error) => {
+          this.mensagem('Erro ao cadastrar usuário!', 'erro');
+        }
       });
     }
   }
@@ -138,15 +174,48 @@ export class CadastroUsuarioComponent {
     });
   }
 
+  buscarAlergias() {
+    this.http.get<AlergiaType[]>(`${this.apiUrl}alergia`).subscribe({
+      next: (response) => {
+        this.alergiasList = response;
+      },
+      error: (error) => {
+        console.error('Erro ao buscar alergias:', error);
+      }
+    });
+  }
+
+   buscarDoencas() {
+    this.http.get<DoencaType[]>(`${this.apiUrl}doenca`).subscribe({
+      next: (response) => {
+        this.doencasList = response;
+      },
+      error: (error) => {
+        console.error('Erro ao buscar doencas:', error);
+      }
+    });
+  }
+
   onTipoUsuarioChange(tipo: string) {
     this.cadastroData.pessoa.tipo = tipo;
     if (tipo === 'médico') {
       this.buscarEspecialidades();
+    } else if (tipo === "paciente") {
+      this.buscarAlergias();
+      this.buscarDoencas();
     } else {
       this.especialidadesList = [];
     }
   }
 
+  mensagem(mensagem: string, tipo: 'sucesso' | 'erro') {
+    this.snackBar.open(mensagem, 'Fechar', {
+      duration: 4000,
+      verticalPosition: 'top',
+      horizontalPosition: 'right',
+      panelClass: tipo === 'sucesso' ? 'snackbar-sucesso' : 'snackbar-erro',
+    });
+  }
 
   get itensFormacoes(): FormacaoType[] {
     return this.formacoes;
@@ -156,16 +225,6 @@ export class CadastroUsuarioComponent {
     this.formacoes = value;
     this.cadastroData.medico.formacoes = value;
   }
-
-  get itensAlergias(): AlergiaType[] {
-    return this.alergias;
-  }
-
-  set itensAlergias(value: AlergiaType[]) {
-    this.alergias = value;
-    this.cadastroData.paciente.alergias = value;
-  }
-
 
   get itensTelefones(): TelefoneType[] {
     return this.telefones;
