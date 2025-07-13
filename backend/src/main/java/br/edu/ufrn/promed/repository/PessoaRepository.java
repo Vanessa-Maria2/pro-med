@@ -87,6 +87,34 @@ public class PessoaRepository {
         return Optional.ofNullable(pessoa);
     }
 
+    public Optional<Pessoa> findByCpf(String cpf) {
+        String sql = "SELECT cpf, nome, sobrenome, email, endereco, data_nascimento, senha FROM pessoa WHERE cpf = ?";
+        Pessoa pessoa = null;
+
+        try {
+            Connection connection = databaseConnection.getConnection();
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, cpf);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                pessoa = new Pessoa();
+                pessoa.setCpf(rs.getString("cpf"));
+                pessoa.setNome(rs.getString("nome"));
+                pessoa.setSobrenome(rs.getString("sobrenome"));
+                pessoa.setEmail(rs.getString("email"));
+                pessoa.setEndereco(rs.getString("endereco"));
+                pessoa.setDataNascimento(rs.getDate("data_nascimento"));
+                pessoa.setSenha(rs.getString("senha"));
+            }
+            databaseConnection.closeConnection();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return Optional.ofNullable(pessoa);
+    }
+
     public void ativar(String email) {
         String sql = "UPDATE pessoa SET ativo = ? WHERE email = ?";
 
@@ -138,4 +166,31 @@ public class PessoaRepository {
         }
         return false;
     }
+
+    public void editar(Pessoa pessoa) {
+        String sql = "UPDATE pessoa SET nome = ?, sobrenome = ?, email = ?, endereco = ?, data_nascimento = ? WHERE cpf = ?";
+
+        try {
+            Connection connection = databaseConnection.getConnection();
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, pessoa.getNome());
+            ps.setString(2, pessoa.getSobrenome());
+            ps.setString(3, pessoa.getEmail());
+            ps.setString(4, pessoa.getEndereco());
+            java.util.Date dataNascimento = pessoa.getDataNascimento();
+            if(dataNascimento != null){
+                Date dataAtualizada = new java.sql.Date(dataNascimento.getTime());
+                ps.setDate(5, dataAtualizada);
+            } else {
+                ps.setObject(5, java.sql.Types.DATE);
+            }
+            ps.setString(6, pessoa.getCpf());
+            ps.executeUpdate();
+            databaseConnection.closeConnection();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

@@ -42,14 +42,15 @@ public class PessoaController {
         }
     }
 
-<<<<<<< HEAD
-    @PutMapping("/deslogar/{cpf}")
-    public ResponseEntity<Void> deslogar(@PathVariable String cpf){
-=======
     @PutMapping("/inativar/{cpf}")
     public ResponseEntity<Void> inativar(@PathVariable String cpf){
->>>>>>> 5bf0b7a (Rename `deslogar` to `inativar` in `PessoaController`, `PessoaService`, and `PessoaRepository`.)
         pessoaService.inativar(cpf);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping( "/editar/{cpf}")
+    public ResponseEntity<Pessoa> editar(@PathVariable String cpf, @RequestBody PessoaRequestDto pessoaDto){
+        Pessoa pessoa = pessoaService.editar(cpf, pessoaDto);
         return ResponseEntity.noContent().build();
     }
 }

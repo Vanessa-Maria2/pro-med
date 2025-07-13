@@ -6,7 +6,9 @@ import br.edu.ufrn.promed.dto.request.PessoaRequestDto;
 import br.edu.ufrn.promed.repository.PessoaRepository;
 import br.edu.ufrn.promed.util.PasswordUtil;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -30,12 +32,38 @@ public class PessoaService {
         return pessoaRepository.findByEmail(email);
     }
 
-<<<<<<< HEAD
+    public Optional<Pessoa> findByCpf(String cpf){return pessoaRepository.findByCpf(cpf);}
+
+
     public void inativar(String cpf){
         pessoaRepository.inativar(cpf);
     }
-=======
-    public void inativar(String cpf){ pessoaRepository.inativar(cpf);}
->>>>>>> 5bf0b7a (Rename `deslogar` to `inativar` in `PessoaController`, `PessoaService`, and `PessoaRepository`.)
 
+    @Transactional
+    public Pessoa editar(String cpf, PessoaRequestDto pessoaDto) {
+        Pessoa pessoa = pessoaRepository.findByCpf(cpf)
+                .orElseThrow(() -> new NoSuchElementException("Pessoa não encontrada"));
+
+        if (pessoaDto.getNome() != null) {
+            pessoa.setNome(pessoaDto.getNome());
+        }
+        if (pessoaDto.getSobrenome() != null) {
+            pessoa.setSobrenome(pessoaDto.getSobrenome());
+        }
+        if (pessoaDto.getEmail() != null) {
+            pessoa.setEmail(pessoaDto.getEmail());
+        }
+        if (pessoaDto.getEndereco() != null) {
+            pessoa.setEndereco(pessoaDto.getEndereco());
+        }
+        if (pessoaDto.getDataNascimento() != null) {
+            pessoa.setDataNascimento(pessoaDto.getDataNascimento());
+        }
+
+    	pessoaRepository.editar(pessoa);
+        return pessoa;
+    }
 }
+
+
+
