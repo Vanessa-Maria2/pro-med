@@ -6,6 +6,8 @@ import br.edu.ufrn.promed.dto.response.MedicoResponseDto;
 import br.edu.ufrn.promed.repository.MedicoRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class MedicoService {
 
@@ -22,5 +24,10 @@ public class MedicoService {
         var medico = medicoMapper.toMedico(medicoRequestDto);
         medicoRepository.cadastro(medico);
         return medicoMapper.toMedicoResponseDto(medico);
+    }
+
+    public List<MedicoResponseDto> buscarTodos() {
+        List<MedicoResponseDto> medicosDtoList = medicoRepository.buscarTodos();
+        return medicosDtoList;
     }
 }

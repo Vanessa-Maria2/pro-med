@@ -28,6 +28,13 @@ public class AuthService {
 
         Pessoa pessoa = pessoaOpt.get();
 
-        return passwordUtil.matchPassword(loginRequestDto.getPassword(), pessoa.getSenha());
+        boolean passwordMatch = passwordUtil.matchPassword(loginRequestDto.getPassword(), pessoa.getSenha());
+
+        if(passwordMatch){
+            pessoaRepository.ativar(loginRequestDto.getEmail());
+            return true;
+        }
+
+        return false;
     }
 }
