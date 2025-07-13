@@ -1,0 +1,46 @@
+<mat-toolbar color="primary" class="navbar">
+  <span>ProMed</span>
+  <span class="spacer"></span>
+  <span *ngIf="loggedInUser">Bem-vindo(a), {{loggedInUser.nome}}</span>
+</mat-toolbar>
+
+<div class="home-content">
+  <h2>Seu Prontuário Médico Simplificado</h2>
+  <p>Aqui você pode ver suas informações de saúde e agendar novas consultas.</p>
+
+  <div *ngIf="loggedInUser && loggedInUser.tipo === 'paciente'">
+    <div class="card">
+      <h3>Próximas Ações Importantes</h3>
+      <button mat-raised-button color="accent" class="action-button" (click)="agendarConsulta()">
+        <mat-icon>event</mat-icon> Agendar Nova Consulta
+      </button>
+      <p class="card-info">Clique no botão para iniciar o agendamento.</p>
+    </div>
+
+    <div class="card patient-appointments-card">
+      <h3>Seus Agendamentos</h3>
+      <mat-list *ngIf="agendamentos.length > 0; else noAppointments">
+        <mat-list-item *ngFor="let agendamento of agendamentos">
+          <mat-icon matListItemIcon>event_note</mat-icon>
+          <div matListItemTitle class="mat-list-item-title">
+            {{agendamento.especialidade}} - Dr(a). {{agendamento.medico}}
+          </div>
+          <div matListItemLine class="mat-list-item-title">
+            Data: {{agendamento.data}} | Horário: {{agendamento.horario}}
+          </div>
+          <mat-divider></mat-divider>
+        </mat-list-item>
+      </mat-list>
+      <ng-template #noAppointments>
+        <p>Você ainda não possui agendamentos.</p>
+      </ng-template>
+    </div>
+  </div>
+
+  <div *ngIf="loggedInUser && loggedInUser.tipo !== 'paciente'">
+    <div class="card">
+        <h3>Conteúdo para {{loggedInUser.tipo | titlecase}}</h3>
+        <p>Aqui aparecerá o conteúdo específico para o perfil de {{loggedInUser.tipo}}. Você pode expandir esta seção.</p>
+        </div>
+  </div>
+</div>
