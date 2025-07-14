@@ -1,10 +1,12 @@
 package br.edu.ufrn.promed.controller;
 
 import br.edu.ufrn.promed.dto.request.LoginRequestDto;
+import br.edu.ufrn.promed.dto.response.AlterarSenhaRequestDto;
 import br.edu.ufrn.promed.model.Pessoa;
 import br.edu.ufrn.promed.dto.request.PessoaRequestDto;
 import br.edu.ufrn.promed.service.AuthService;
 import br.edu.ufrn.promed.service.PessoaService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -45,6 +47,12 @@ public class PessoaController {
     @PutMapping("/deslogar/{cpf}")
     public ResponseEntity<Void> deslogar(@PathVariable String cpf){
         pessoaService.inativar(cpf);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{email}/senha")
+    public ResponseEntity<Void> alterarSenha(@PathVariable String email, @Valid @RequestBody AlterarSenhaRequestDto dto){
+        pessoaService.alterarSenha(email, dto.getSenhaAtual(), dto.getNovaSenha(), dto.getConfirmarSenha());
         return ResponseEntity.noContent().build();
     }
 }

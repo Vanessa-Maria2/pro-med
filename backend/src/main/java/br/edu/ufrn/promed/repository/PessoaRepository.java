@@ -138,4 +138,22 @@ public class PessoaRepository {
         }
         return false;
     }
+
+    public void alterarSenha(String email, String novoHash) {
+        String sql = "UPDATE pessoa SET senha = ? WHERE email = ?";
+
+        try(Connection connection = databaseConnection.getConnection();
+            PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            ps.setString(1, novoHash);
+            ps.setString(2, email);
+
+            int linhasAfetadas = ps.executeUpdate();
+            if(linhasAfetadas == 0) {
+                throw new SQLException("Erro ao alterar senha, usuário com email " + email + " não encontrado.");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao alterar senha", e);
+        }
+    }
 }
