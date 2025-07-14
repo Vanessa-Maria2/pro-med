@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Medico {
 
-    private int numCrm;
+    private String numCrm;
 
     private String ufCrm;
 
@@ -14,11 +14,11 @@ public class Medico {
 
     private List<Especialidade> especialidades;
 
-    public int getNumCrm() {
+    public String getNumCrm() {
         return numCrm;
     }
 
-    public void setNumCrm(int numCrm) {
+    public void setNumCrm(String numCrm) {
         this.numCrm = numCrm;
     }
 

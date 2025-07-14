@@ -9,10 +9,10 @@ import java.util.List;
 public class MedicoRequestDto {
 
     @NotNull(message = "O campo número CRM é obrigatório")
-    private int numCrm;
+    private String numCrm;
 
     @NotNull(message = "O campo uf CRM é obrigatório")
-    private int ufCrm;
+    private String ufCrm;
 
     private PessoaRequestDto pessoaRequestDto;
 
@@ -20,19 +20,19 @@ public class MedicoRequestDto {
 
     private List<Especialidade> especialidades;
 
-    public int getNumCrm() {
+    public String getNumCrm() {
         return numCrm;
     }
 
-    public void setNumCrm(int numCrm) {
+    public void setNumCrm(String numCrm) {
         this.numCrm = numCrm;
     }
 
-    public int getUfCrm() {
+    public String getUfCrm() {
         return ufCrm;
     }
 
-    public void setUfCrm(int ufCrm) {
+    public void setUfCrm(String ufCrm) {
         this.ufCrm = ufCrm;
     }
 

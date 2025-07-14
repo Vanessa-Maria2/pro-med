@@ -8,7 +8,7 @@ import java.util.List;
 
 public class MedicoResponseDto {
 
-    private int numCrm;
+    private String numCrm;
 
     private String ufCrm;
 
@@ -18,11 +18,11 @@ public class MedicoResponseDto {
 
     private List<Especialidade> especialidades;
 
-    public int getNumCrm() {
+    public String getNumCrm() {
         return numCrm;
     }
 
-    public void setNumCrm(int numCrm) {
+    public void setNumCrm(String numCrm) {
         this.numCrm = numCrm;
     }
 

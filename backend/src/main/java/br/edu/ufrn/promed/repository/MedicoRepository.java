@@ -87,7 +87,7 @@ public class MedicoRepository {
                 pessoa.setDataNascimento(rs.getDate("data_nascimento"));
 
                 Medico medico = new Medico();
-                medico.setNumCrm(rs.getInt("num_crm"));
+                medico.setNumCrm(rs.getString("num_crm"));
                 medico.setUfCrm(rs.getString("uf_crm"));
                 medico.setPessoa(pessoa);
 
