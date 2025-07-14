@@ -27,6 +27,17 @@ public class HorarioAtendimentoService {
         return horaraioDtoList;
     }
 
+    public List<HorarioAtendimentoResponseDto> buscarPorPaciente(String Paciente_cpf) {
+        List<HorarioAtendimentoResponseDto> horaraioDtoList = horarioAtendimentoRepository.buscarPorPaciente(Paciente_cpf);
+        return horaraioDtoList;
+    }
+
+    public List<HorarioAtendimentoResponseDto> atendimentosDiarios(String Medico_cpf) {
+        List<HorarioAtendimentoResponseDto> horaraioDtoList = horarioAtendimentoRepository.buscarAtendimentosDiarios(Medico_cpf);
+        return horaraioDtoList;
+    }
+
+
     public boolean agendarHorarioAtendimento(int horarioAtendimentoId, String cpf) throws SQLException {
         return this.horarioAtendimentoRepository.agendarHorarioAtendimento(horarioAtendimentoId, cpf);
     }

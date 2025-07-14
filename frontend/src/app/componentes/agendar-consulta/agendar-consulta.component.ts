@@ -14,6 +14,7 @@ import { MedicoType } from '../../models/medicoType';
 import { HorarioAtendimentoType } from '../../models/horarioAtendimento';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserService } from '../../services/user.service';
+import { PessoaType } from '../../models/pessoaType';
 
 @Component({
   selector: 'app-agendar-consulta',

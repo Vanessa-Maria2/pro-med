@@ -36,6 +36,7 @@ export class UserService {
 
   logout(): void {
     if (isPlatformBrowser(this.platformId)) {
+      console.log("navegador")
       localStorage.removeItem('loggedInUser');
     }
     this.currentUserSubject.next(null);

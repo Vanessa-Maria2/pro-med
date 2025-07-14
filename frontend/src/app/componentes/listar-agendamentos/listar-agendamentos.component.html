@@ -3,8 +3,11 @@
   <p>{{ dataFormatada | date: 'd \'de\' MMMM \'de\' y' : 'pt-BR' }}</p>
 
   <div class="card-actions">
-    <button mat-button color="primary" class="action-button" (click)="agendarConsulta()">
+    <button mat-button color="primary" class="action-button" (click)="agendarConsulta()" *ngIf="user && user.tipo === 'paciente'">
       <mat-icon>event</mat-icon> Agendar Consulta
+    </button>
+     <button mat-button color="primary" class="action-button" (click)="criarHorarioAtendimento()" *ngIf="user && user.tipo === 'médico'">
+      <mat-icon>event</mat-icon> Criar horário de atendimento
     </button>
   </div>
 </div>
@@ -22,8 +25,11 @@
     </span>
     <mat-card-content class="card-content">
       <div class="right-section">
-        <div class="doctor-name">
+        <div class="doctor-name" *ngIf="user && user.tipo === 'médico'">
           Dr(a). {{ horarioAtendimento.nomeMedico }} {{ horarioAtendimento.sobrenomeMedico }}
+        </div>
+        <div class="doctor-name" *ngIf="user && user.tipo != 'médico'">
+         {{ horarioAtendimento.nomeMedico }} {{ horarioAtendimento.sobrenomeMedico }}
         </div>
       </div>
       <div class="left-section">
