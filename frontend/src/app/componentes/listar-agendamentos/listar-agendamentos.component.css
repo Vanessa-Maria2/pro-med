@@ -1,0 +1,138 @@
+.card {
+  position: relative;
+  padding: 16px;
+}
+
+.card-actions {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background-color: #478F96;
+  border-radius: 10px;
+}
+
+.action-button {
+  color: #FFFFFF;
+}
+
+.appointments-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.appointment-card {
+  position: relative;
+  background-color: white;
+}
+
+.status-badge {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-weight: bold;
+  font-size: 0.85rem;
+  color: white;
+  text-transform: uppercase;
+}
+
+
+.status-badge.disponivel {
+  background-color: #478F96;
+}
+
+.status-badge.cancelado {
+  background-color: #E5B6B8;
+  color: #595959;
+}
+
+.status-badge.agendado {
+  background-color: #C6DCDE; 
+  color: #595959;
+}
+
+.card-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.left-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.right-section {
+  text-align: right;
+}
+
+.date {
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.btn-remove {
+  background-color: #E95656;
+  color: white;
+  width: 40px;
+}
+
+.mat-chip {
+  background-color: #D0FBFF;
+  border: none;
+}
+
+.texto {
+  border: none;
+}
+
+.btn-horario {
+  background-color: #D0FBFF;    
+  color: #383838;              
+  border: none;                
+  padding: 8px 16px;           
+  font-weight: 600;           
+  border-radius: 6px;          
+  cursor: not-allowed;         
+  box-shadow: none;           
+  transition: background-color 0.3s ease; 
+}
+
+.btn-horario:disabled {
+  cursor: default; 
+}
+
+.appointment-card {
+  position: relative; 
+  padding-top: 28px;  
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 8px; 
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-size: medium;
+}
+
+.status-badge {
+  position: absolute;
+  top: -8px;     
+  left: 80px;   
+  background-color: #1976d2; 
+  color: white;
+  font-weight: 600;
+  font-size: 12px;
+  padding: 4px 12px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  user-select: none;
+  pointer-events: none; /* evita interação com a badge */
+  z-index: 10;
+  text-transform: uppercase;
+}
+
+.titulo {
+  font-weight: 500;
+  color: #303030;
+}

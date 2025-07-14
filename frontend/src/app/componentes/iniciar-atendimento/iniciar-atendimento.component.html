@@ -1,0 +1,69 @@
+<div class="atendimento-container">
+  <mat-card class="atendimento-card">
+    <mat-card-title>Iniciar Atendimento</mat-card-title>
+    <mat-card-content>
+      <form class="atendimento-form">
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Resumo da Consulta</mat-label>
+          <textarea matInput [(ngModel)]="consultationSummary" name="summary" rows="5" required
+                    placeholder="Descreva o resumo da consulta..."></textarea>
+          <mat-error *ngIf="!consultationSummary">Resumo é obrigatório</mat-error>
+        </mat-form-field>
+
+        <div class="section-title">
+          <h3>Receita de Remédios</h3>
+          <button mat-raised-button color="primary" (click)="addPrescriptionItem()">
+            <mat-icon>add</mat-icon> Adicionar Remédio
+          </button>
+        </div>
+        <div *ngFor="let item of prescriptionItems; let i = index" class="form-row dynamic-item">
+          <mat-form-field appearance="fill" class="form-field-item">
+            <mat-label>Medicamento {{i + 1}}</mat-label>
+            <mat-select [(ngModel)]="item.medicamentoId" name="medicamentoId{{i}}" required>
+              <mat-option *ngFor="let med of allMedicines" [value]="med.id">
+                {{med.nome}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="!item.medicamentoId">Medicamento é obrigatório</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="form-field-item">
+            <mat-label>Dosagem</mat-label>
+            <input matInput [(ngModel)]="item.dosagem" name="dosagem{{i}}" required
+                   placeholder="Ex: 500mg, 10ml" />
+            <mat-error *ngIf="!item.dosagem">Dosagem é obrigatória</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="form-field-item">
+            <mat-label>Instruções</mat-label>
+            <input matInput [(ngModel)]="item.instrucoes" name="instrucoes{{i}}" required
+                   placeholder="Ex: 1x ao dia por 7 dias" />
+            <mat-error *ngIf="!item.instrucoes">Instruções são obrigatórias</mat-error>
+          </mat-form-field>
+
+          <button mat-icon-button color="warn" (click)="removePrescriptionItem(i)" *ngIf="prescriptionItems.length > 1">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Solicitar Exames</mat-label>
+          <mat-select [(ngModel)]="selectedExamTypeIds" name="examTypes" multiple> <mat-option *ngFor="let exam of allExamTypes" [value]="exam.id">
+              {{exam.descricao}}
+            </mat-option>
+          </mat-select>
+          <mat-hint>Selecione um ou mais exames (opcional)</mat-hint>
+        </mat-form-field>
+
+      </form>
+    </mat-card-content>
+    <mat-card-actions class="card-actions">
+      <button mat-raised-button color="primary" (click)="solicitarAtendimento()"
+        [disabled]="isAtendimentoFormInvalid"> Registrar Atendimento
+    </button>
+      <button mat-button color="default" (click)="cancel()">
+        Cancelar
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

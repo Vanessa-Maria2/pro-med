@@ -177,7 +177,7 @@
           </mat-form-field>
         </div>
         <div class="form-row">
-          <mat-form-field class="form-field-pair">
+          <mat-form-field class="form-field">
               <mat-label>Alergias</mat-label>
               <mat-select [formControl]="alergias" multiple [(ngModel)]="alergias">
                 @for (alergia of alergiasList; track alergia) {
@@ -186,7 +186,7 @@
               </mat-select>
             </mat-form-field>
 
-          <mat-form-field class="form-field-pair">
+          <mat-form-field class="form-field">
               <mat-label>Doenças</mat-label>
               <mat-select [formControl]="doencas" multiple [(ngModel)]="doencas">
                 @for (doenca of doencasList; track doenca) {

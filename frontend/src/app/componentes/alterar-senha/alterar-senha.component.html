@@ -1,0 +1,36 @@
+<form class="login-form" (ngSubmit)="alterarSenha()" #cadastroForm="ngForm">
+    <div class="form-row">
+        <mat-form-field appearance="fill" class="form-field-pair">
+            <mat-label>Senha</mat-label>
+            <input matInput name="senha" [type]="hidePassword ? 'password' : 'text'" placeholder="Digite sua senha"
+                [(ngModel)]="cadastroData.pessoa.senha" minlength="6" maxlength="10" required #senha="ngModel" />
+            <button mat-icon-button matSuffix type="button" (click)="hidePassword = !hidePassword"
+                [attr.aria-label]="'Alternar visibilidade da senha'" [attr.aria-pressed]="!hidePassword">
+                <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+            <mat-error *ngIf="senha.invalid && senha.touched">
+                <small *ngIf="senha.errors?.['required']">Senha é obrigatória</small>
+                <small *ngIf="senha.errors?.['minlength']">Mínimo 6 caracteres</small>
+                <small *ngIf="senha.errors?.['maxlength']">Máximo 10 caracteres</small>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="form-field-pair">
+            <mat-label>Confirmar Senha</mat-label>
+            <input matInput name="confirmarSenha" [type]="hidePassword ? 'password' : 'text'"
+                placeholder="Confirme sua senha" [(ngModel)]="confirmarSenha" required #confirmaSenha="ngModel" />
+            <button mat-icon-button matSuffix type="button" (click)="hidePassword = !hidePassword"
+                [attr.aria-label]="'Alternar visibilidade da senha'" [attr.aria-pressed]="!hidePassword">
+                <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+            <mat-error *ngIf="(confirmaSenha.touched || senha.touched) && cadastroData.pessoa.senha !== confirmarSenha">
+                <small>As senhas não coincidem</small>
+            </mat-error>
+        </mat-form-field>
+    </div>
+
+    <button mat-button type="submit" class="btn"
+        [disabled]="cadastroForm.invalid || cadastroData.pessoa.senha !== confirmarSenha">
+        Alterar
+    </button>
+</form>
