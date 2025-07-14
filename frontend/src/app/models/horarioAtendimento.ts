@@ -10,4 +10,6 @@ export interface HorarioAtendimentoType {
    idGrupoRecorrencia: number;
    nomeMedico: string;
    sobrenomeMedico: string;
+   nomePaciente: string;
+   sobrenomePaciente: string;
 }

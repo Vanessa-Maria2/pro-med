@@ -1,8 +1,7 @@
 <div class="card">
-  <h3 class="titulo">Horários atendimentos</h3>
+  <h3 class="titulo" *ngIf="user && user.tipo === 'médico'">Consultas de hoje</h3>
   <p>Seja bem vindo, {{ user?.nome }} {{ user?.sobrenome }}</p>
 
- 
 </div>
 <div *ngIf="horarioAtendimentos.length > 0; else noAppointments" class="appointments-container">
   <mat-card *ngFor="let horarioAtendimento of horarioAtendimentos" class="appointment-card">
@@ -16,13 +15,15 @@
     >
       {{ horarioAtendimento.status }}
     </span>
-    <mat-card-content class="card-content">
+    <mat-card-content class="card-content" *ngIf="user && user.tipo === 'médico'">
       <div class="right-section">
-        <div class="doctor-name" *ngIf="user && user.tipo === 'médico'">
+        <div class="doctor-name">
           Dr(a). {{ horarioAtendimento.nomeMedico }} {{ horarioAtendimento.sobrenomeMedico }}
         </div>
-        <div class="doctor-name" *ngIf="user && user.tipo != 'médico'">
-         {{ horarioAtendimento.nomeMedico }} {{ horarioAtendimento.sobrenomeMedico }}
+      </div>
+      <div class="center">
+         <div class="doctor-name">
+          Paciente {{ horarioAtendimento.nomePaciente }} {{ horarioAtendimento.sobrenomePaciente }}
         </div>
       </div>
       <div class="left-section">
