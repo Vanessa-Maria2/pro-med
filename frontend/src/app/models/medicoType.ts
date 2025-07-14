@@ -8,5 +8,6 @@ export interface MedicoType {
     ufCrm?: string;
     formacoes?: FormacaoType[];
     especialidades?: EspecialidadeType[];
-    pessoaRequestDto?: PessoaType
+    pessoaRequestDto?: PessoaType,
+    pessoaResponseDto?: PessoaType
 }

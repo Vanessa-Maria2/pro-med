@@ -12,7 +12,7 @@ public class MedicoResponseDto {
 
     private String ufCrm;
 
-    private Pessoa pessoa;
+    private PessoaResponseDto pessoaResponseDto;
 
     private List<Formacao> formacoes;
 
@@ -30,12 +30,12 @@ public class MedicoResponseDto {
 
     public void setUfCrm(String ufCrm) { this.ufCrm = ufCrm; }
 
-    public Pessoa getPessoa() {
-        return pessoa;
+    public PessoaResponseDto getPessoaResponseDto() {
+        return pessoaResponseDto;
     }
 
-    public void setPessoa(Pessoa pessoa) {
-        this.pessoa = pessoa;
+    public void setPessoaResponseDto(PessoaResponseDto pessoaResponseDto) {
+        this.pessoaResponseDto = pessoaResponseDto;
     }
 
     public List<Formacao> getFormacoes() {

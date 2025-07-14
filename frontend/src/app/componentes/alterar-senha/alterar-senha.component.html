@@ -1,0 +1,64 @@
+<div class="login-container">
+    <div class="right-side">
+        <form class="login-form" (ngSubmit)="alterarSenha()">
+            <div class="form-row">
+
+                <mat-form-field appearance="fill" class="form-field-pair">
+                    <mat-label>Senha atual</mat-label>
+                    <input matInput name="senhaAtual" [type]="hidePasswordSenhaAtual ? 'password' : 'text'"
+                        placeholder="Digite sua senha atual" [(ngModel)]="senhaAtual" minlength="6" maxlength="10"
+                        required #senhaAtualModel="ngModel" />
+                    <button mat-icon-button matSuffix (click)="hidePasswordSenhaAtual = !hidePasswordSenhaAtual"
+                        [attr.aria-label]="'Alternar visibilidade da senha'"
+                        [attr.aria-pressed]="!hidePasswordSenhaAtual">
+                        <mat-icon>{{ hidePasswordSenhaAtual ? 'visibility_off' : 'visibility' }}</mat-icon>
+                    </button>
+                    <mat-error *ngIf="senhaAtualModel.invalid && senhaAtualModel.touched">
+                        <small *ngIf="senhaAtualModel.errors?.['required']">Senha é obrigatória</small>
+                        <small *ngIf="senhaAtualModel.errors?.['minlength']">Senha deve ter no mínimo 6
+                            caracteres</small>
+                        <small *ngIf="senhaAtualModel.errors?.['maxlength']">Senha deve ter no máximo 10
+                            caracteres</small>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="form-field-pair">
+                    <mat-label>Senha</mat-label>
+                    <input matInput name="senha" [type]="hidePasswordSenha ? 'password' : 'text'"
+                        placeholder="Digite sua senha" [(ngModel)]="senha" minlength="6" maxlength="10" required
+                        #senhaModel="ngModel" />
+                    <button mat-icon-button matSuffix (click)="hidePasswordSenha = !hidePasswordSenha"
+                        [attr.aria-label]="'Alternar visibilidade da senha'" [attr.aria-pressed]="!hidePasswordSenha">
+                        <mat-icon>{{ hidePasswordSenha ? 'visibility_off' : 'visibility' }}</mat-icon>
+                    </button>
+                    <mat-error *ngIf="senhaModel.invalid && senhaModel.touched">
+                        <small *ngIf="senhaModel.errors?.['required']">Senha é obrigatória</small>
+                        <small *ngIf="senhaModel.errors?.['minlength']">Senha deve ter no mínimo 6 caracteres</small>
+                        <small *ngIf="senhaModel.errors?.['maxlength']">Senha deve ter no máximo 10 caracteres</small>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="form-field-pair">
+                    <mat-label>Confirmar senha</mat-label>
+                    <input matInput name="confirmarSenha" [type]="hidePasswordConfirmarSenha ? 'password' : 'text'"
+                        placeholder="Digite sua senha" [(ngModel)]="confirmarSenha" minlength="6" maxlength="10"
+                        required #confirmarSenhaModel="ngModel" />
+                    <button mat-icon-button matSuffix (click)="hidePasswordConfirmarSenha = !hidePasswordConfirmarSenha"
+                        [attr.aria-label]="'Alternar visibilidade da senha'"
+                        [attr.aria-pressed]="!hidePasswordConfirmarSenha">
+                        <mat-icon>{{ hidePasswordConfirmarSenha ? 'visibility_off' : 'visibility' }}</mat-icon>
+                    </button>
+                    <mat-error *ngIf="confirmarSenhaModel.invalid && confirmarSenhaModel.touched">
+                        <small *ngIf="confirmarSenhaModel.errors?.['required']">Senha é obrigatória</small>
+                        <small *ngIf="confirmarSenhaModel.errors?.['minlength']">Senha deve ter no mínimo 6
+                            caracteres</small>
+                        <small *ngIf="confirmarSenhaModel.errors?.['maxlength']">Senha deve ter no máximo 10
+                            caracteres</small>
+                    </mat-error>
+                </mat-form-field>
+
+            </div>
+            <button mat-button type="submit" class="btn">Alterar</button>
+        </form>
+    </div>
+</div>

@@ -31,12 +31,6 @@ public class ConsultaRepository {
     public void cadastrar(Consulta consulta) throws SQLException {
         String sql = "INSERT INTO consulta (resumo, hora_inicio, hora_fim, Horario_atendimento_id) VALUES (?,?,?,?)";
 
-        var disponivel = this.horarioAtendimentoService.isHorarioAtendimentoDisponivel(consulta.getHorarioAtendimentoId());
-
-        if (!disponivel) {
-            throw new IllegalArgumentException("Horario de atendimento já está ocupado");
-        }
-
         Connection connection = null;
         try {
             connection = databaseConnection.getConnection();
@@ -47,8 +41,6 @@ public class ConsultaRepository {
             ps.setString(3, consulta.getHoraFim().toString());
             ps.setInt(4, consulta.getHorarioAtendimentoId());
             ps.execute();
-
-            horarioAtendimentoService.ocuparHorario(consulta.getHorarioAtendimentoId(), connection);
 
             var consultaBuscada = this.buscar(consulta, connection);
             consulta.setId(consultaBuscada.getId());

@@ -1,0 +1,40 @@
+<div class="agendamento-container">
+  <mat-card class="agendamento-card">
+    <mat-card-title>Agendar Nova Consulta</mat-card-title>
+    <mat-card-content>
+      <form class="agendamento-form">
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Médico</mat-label>
+          <mat-select [(ngModel)]="selectedDoctorId" name="doctor" required
+                      (selectionChange)="onDoctorChange()" #doctorSelect="ngModel"> <mat-option *ngFor="let doctor of doctors" [value]="doctor.pessoaResponseDto?.cpf">
+              {{doctor.pessoaResponseDto?.nome}}
+            </mat-option>
+            <mat-option *ngIf="doctors.length === 0" disabled>
+              Nenhum médico disponível 
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="doctorSelect.invalid && doctorSelect.touched">Médico é obrigatório</mat-error> </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width" *ngIf="selectedDoctorId">
+            <mat-label>Horário disponível</mat-label>
+            <mat-select [(ngModel)]="selectHorarioAtendimentoId" name="selectedHorarioAtendimentoId" required
+                      #horarioAtendimentoSelect="ngModel"> <mat-option *ngFor="let horario of horariosAtendimentos" [value]="horario.id">
+                  {{ horario.data | date:'EEEE, dd \'de\' MMMM \'de\' yyyy' }} às {{ horario.horario }}
+            </mat-option>
+            <mat-option *ngIf="horariosAtendimentos.length === 0" disabled>
+              Nenhum horário disponível 
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </form>
+    </mat-card-content>
+    <mat-card-actions class="card-actions">
+      <button mat-raised-button color="primary" (click)="agendar()"
+              [disabled]="!selectHorarioAtendimentoId || !selectedDoctorId" >
+        Agendar Consulta
+      </button>
+      <button mat-button color="default" (click)="cancel()"> Cancelar
+    </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

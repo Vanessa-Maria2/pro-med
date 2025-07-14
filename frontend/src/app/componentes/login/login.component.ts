@@ -9,6 +9,10 @@ import { LoginType } from '../../models/loginType';
 import { HttpClient } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+import { UserService } from '../../services/user.service';
+import { PessoaType } from '../../models/pessoaType';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -21,18 +25,40 @@ export class LoginComponent {
   loginData: LoginType = { email: '', password: ''};
   apiUrl = 'http://localhost:8080/pessoa/login';
 
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient,
+              private router: Router,
+              private userService: UserService,
+              private snackBar: MatSnackBar) {}
 
   login() {
-    this.http.post(this.apiUrl, this.loginData).subscribe({
+    this.http.post<PessoaType>(this.apiUrl, this.loginData).subscribe({
           next: (response) => {
-            console.log('Login com sucesso:', response);
+            const user: PessoaType = {
+              cpf: response.cpf,
+              nome: response.nome,
+              sobrenome: response.sobrenome,
+              email: response.email,
+              endereco: response.endereco,
+              dataNascimento: response.dataNascimento ? new Date(response.dataNascimento) : null,
+              senha: response.senha,
+              tipo: response.tipo,
+              telefones: response.telefones
+            };
+            this.userService.setLoggedInUser(user);
+            this.router.navigate(['/home']);
           },
           error: (error) => {
-            console.error('Erro no login:', error);
+            this.mensagem("Credencias inválidas", 'erro')
           },
         });  
     }
 
+  mensagem(mensagem: string, tipo: 'sucesso' | 'erro') {
+      this.snackBar.open(mensagem, 'Fechar', {
+        duration: 4000,
+        verticalPosition: 'top',
+        horizontalPosition: 'right',
+        panelClass: tipo === 'sucesso' ? 'snackbar-sucesso' : 'snackbar-erro',
+      });
+    }
 }

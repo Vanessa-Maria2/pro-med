@@ -1,0 +1,137 @@
+.login-container {
+  display: flex;
+  height: 100vh; 
+}
+
+.right-side {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 16px; 
+  background-color: #ffffff;
+  gap: 30px; 
+  box-sizing: border-box; 
+}
+
+.logo-completo {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  margin-bottom: 0; 
+  text-align: center; 
+}
+
+.logo-imagem {
+  width: 80px; 
+  height: auto; 
+  margin-bottom: 8px; 
+}
+
+.textos {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.textos h2 {
+  color: #303030;
+  font-weight: 600;
+  margin: 0;
+}
+
+.textos p {
+  margin: 0;
+}
+
+.barra {
+  display: inline-block;
+  width: 1px;
+  height: 20px;
+  background-color: #d3d3d3;
+  margin: 0 10px;
+  vertical-align: middle;
+}
+
+.login-form {
+  width: 100%;
+  max-width: 650px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  gap: 20px; 
+}
+
+.form-row {
+  display: flex;
+  flex-wrap: wrap; 
+  justify-content: space-between; 
+  width: 100%; 
+  gap: 20px; 
+}
+
+
+.form-field-triple {
+  flex: 1 1 calc((100% - (2 * 20px)) / 3);
+  min-width: 150px; 
+  margin-bottom: 0; 
+}
+
+
+.form-field-pair {
+  flex: 1 1 calc((100% - (1 * 20px)) / 2);
+  min-width: 200px; 
+  margin-bottom: 0; 
+}
+
+.btn {
+  background-color: #478F96;
+  border: #478F96;
+  border-radius: 8px;
+  width: 100%; 
+  height: 50px; 
+  color: #ffffff;
+  font-size: medium;
+  margin-top: 10px; 
+  cursor: pointer;
+}
+
+mat-error {
+  color: #f76457;
+  font-size: 12px;
+}
+
+/* Responsividade básica: Em telas menores, os campos voltam a ser empilhados */
+@media (max-width: 768px) {
+  .login-container {
+    flex-direction: column;
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .left-side {
+    height: 30vh;
+  }
+
+  .right-side {
+    padding: 20px;
+  }
+
+  .form-row {
+    flex-direction: column; 
+    gap: 0; 
+  }
+
+  .form-field-triple,
+  .form-field-pair {
+    width: 100%; 
+    margin-bottom: 20px;
+    flex: none; 
+  }
+
+  .form-row-dynamic {
+  width: 100%;
+  /* margin-top: 15px; */
+  /* margin-bottom: 15px; */
+}
+}

@@ -1,13 +1,28 @@
-// import { Routes } from '@angular/router';
-
-// export const routes: Routes = [];
 import { Routes } from '@angular/router';
-// Importe o novo componente
-import { LoginComponent } from './componentes/login/login.component'; // Já existe, apenas para referência
+import { LoginComponent } from './componentes/login/login.component';
 import { CadastroUsuarioComponent } from './componentes/cadastro-usuario/cadastro-usuario.component';
+import { HomeComponent } from './componentes/home/home.component';
+import { DashboardComponent } from './componentes/dashboard/dashboard.component';
+import { AgendarConsultaComponent } from './componentes/agendar-consulta/agendar-consulta.component';
+import { ListarAgendamentosComponent } from './componentes/listar-agendamentos/listar-agendamentos.component';
+import { ConfigurarPerfilComponent } from './componentes/configurar-perfil/configurar-perfil.component';
+import { IniciarAtendimentoComponent } from './componentes/iniciar-atendimento/iniciar-atendimento.component';
 
 export const routes: Routes = [
-    { path: 'login', component: LoginComponent }, // Rota existente para o login
-    { path: 'cadastro', component: CadastroUsuarioComponent }, // Nova rota para o cadastro
-    { path: '', redirectTo: '/login', pathMatch: 'full' } // Redireciona para login como padrão
+  { path: 'login', component: LoginComponent },
+  { path: 'cadastro', component: CadastroUsuarioComponent },
+  { 
+    path: '', 
+    component: HomeComponent, 
+    children: [
+      { path: 'home', component: DashboardComponent },
+      { path: 'dashboard', component: DashboardComponent },
+      { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+      { path: 'agendar-consulta', component: AgendarConsultaComponent },
+      { path: 'agenda', component: ListarAgendamentosComponent},
+      { path: 'configuracoes', component: ConfigurarPerfilComponent},
+      { path: 'servicos', component: IniciarAtendimentoComponent}
+    ]
+  },
+  { path: '**', redirectTo: 'login' }
 ];

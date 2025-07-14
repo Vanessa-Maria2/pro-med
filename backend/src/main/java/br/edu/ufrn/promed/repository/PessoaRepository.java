@@ -26,7 +26,7 @@ public class PessoaRepository {
     }
 
     public void cadastro(Pessoa pessoa) {
-        String sql = "INSERT INTO pessoa (cpf, nome, sobrenome, email, endereco, data_nascimento, senha, ativo) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO pessoa (cpf, nome, sobrenome, email, endereco, data_nascimento, senha, ativo, tipo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         if (existePessoa(pessoa)) {
             throw new RuntimeException("Já existe pessoa cadastrada com este email ou cpf");
@@ -44,6 +44,7 @@ public class PessoaRepository {
             ps.setDate(6, dataSql);
             ps.setString(7, passwordUtil.hashPassword(pessoa.getSenha()));
             ps.setString(8, "1");
+            ps.setString(9, pessoa.getTipo());
             ps.executeUpdate();
 
             databaseConnection.closeConnection();
@@ -62,7 +63,7 @@ public class PessoaRepository {
     }
 
     public Optional<Pessoa> findByEmail(String email) {
-        String sql = "SELECT cpf, nome, sobrenome, email, endereco, data_nascimento, senha FROM pessoa WHERE email = ?";
+        String sql = "SELECT cpf, nome, sobrenome, email, endereco, data_nascimento, senha, tipo FROM pessoa WHERE email = ?";
         Pessoa pessoa = null;
         try {
             Connection connection = databaseConnection.getConnection();
@@ -79,6 +80,7 @@ public class PessoaRepository {
                 pessoa.setEndereco(rs.getString("endereco"));
                 pessoa.setDataNascimento(rs.getDate("data_nascimento"));
                 pessoa.setSenha(rs.getString("senha"));
+                pessoa.setTipo(rs.getString("tipo"));
             }
             databaseConnection.closeConnection();
         } catch (SQLException e) {
@@ -137,5 +139,23 @@ public class PessoaRepository {
             throw new RuntimeException(e);
         }
         return false;
+    }
+
+    public void alterarSenha(String email, String novoHash) {
+        String sql = "UPDATE pessoa SET senha = ? WHERE email = ?";
+
+        try(Connection connection = databaseConnection.getConnection();
+            PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            ps.setString(1, novoHash);
+            ps.setString(2, email);
+
+            int linhasAfetadas = ps.executeUpdate();
+            if(linhasAfetadas == 0) {
+                throw new SQLException("Erro ao alterar senha, usuário com email " + email + " não encontrado.");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao alterar senha", e);
+        }
     }
 }
