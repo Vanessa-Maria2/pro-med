@@ -27,12 +27,18 @@ public class MedicoRepository {
 
     private final MedicoMapper medicoMapper;
 
-    public MedicoRepository(DatabaseConnection databaseConnection, PessoaRepository pessoaRepository, FormacaoRepository formacaoRepository, EspecialidadeRepository especialidadeRepository, MedicoMapper medicoMapper) {
+    private final HorarioAtendimentoRepository horarioAtendimentoRepository;
+
+    private final GrupoRecorrenciaRepository grupoRecorrenciaRepository;
+
+    public MedicoRepository(DatabaseConnection databaseConnection, PessoaRepository pessoaRepository, FormacaoRepository formacaoRepository, EspecialidadeRepository especialidadeRepository, MedicoMapper medicoMapper, HorarioAtendimentoRepository horarioAtendimentoRepository, GrupoRecorrenciaRepository grupoRecorrenciaRepository) {
         this.databaseConnection = databaseConnection;
         this.pessoaRepository = pessoaRepository;
         this.formacaoRepository = formacaoRepository;
         this.especialidadeRepository = especialidadeRepository;
         this.medicoMapper = medicoMapper;
+        this.horarioAtendimentoRepository = horarioAtendimentoRepository;
+        this.grupoRecorrenciaRepository = grupoRecorrenciaRepository;
     }
 
     public void cadastro(Medico medico) {
@@ -95,4 +101,6 @@ public class MedicoRepository {
 
         return medicosDtoList;
     }
+
+
 }
