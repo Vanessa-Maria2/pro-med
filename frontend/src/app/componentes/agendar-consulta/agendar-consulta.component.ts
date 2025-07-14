@@ -95,7 +95,7 @@ export class AgendarConsultaComponent implements OnInit {
   }
 
   buscarHorarioAtendimento() {
-    this.http.get<HorarioAtendimentoType[]>(`${this.apiUrl}horario-atendimento/buscarPorMedico/${this.selectedDoctorId}?status=DISPONIVEL`).subscribe({
+    this.http.get<HorarioAtendimentoType[]>(`${this.apiUrl}horario-atendimento/buscarPorMedicoStatus/${this.selectedDoctorId}?status=DISPONIVEL`).subscribe({
       next: (response) => {
         this.horariosAtendimentos = response;
       }

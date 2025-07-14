@@ -1,5 +1,5 @@
 <div class="atendimento-container">
-  <mat-card class="atendimento-card">
+  <mat-card class="atendimento-card"  *ngIf="user && user.tipo == 'médico'">
     <mat-card-title>Iniciar Atendimento</mat-card-title>
     <mat-card-content>
       <form class="atendimento-form">

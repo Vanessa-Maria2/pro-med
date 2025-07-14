@@ -22,10 +22,16 @@ public class HorarioAtendimentoService {
         return this.horarioAtendimentoRepository.buscarTodas(status);
     }
 
-    public List<HorarioAtendimentoResponseDto> buscarPorMedico(String Medico_cpf, String status) {
-        List<HorarioAtendimentoResponseDto> horaraioDtoList = horarioAtendimentoRepository.buscarPorMedico(Medico_cpf, status);
+    public List<HorarioAtendimentoResponseDto> buscarPorMedico(String Medico_cpf) {
+        List<HorarioAtendimentoResponseDto> horaraioDtoList = horarioAtendimentoRepository.buscarPorMedico(Medico_cpf);
         return horaraioDtoList;
     }
+
+    public List<HorarioAtendimentoResponseDto> buscarPorMedicoPorStatus(String Medico_cpf, String status) {
+        List<HorarioAtendimentoResponseDto> horaraioDtoList = horarioAtendimentoRepository.buscarPorMedicoPorStatus(Medico_cpf, status);
+        return horaraioDtoList;
+    }
+
 
     public List<HorarioAtendimentoResponseDto> buscarPorPaciente(String Paciente_cpf) {
         List<HorarioAtendimentoResponseDto> horaraioDtoList = horarioAtendimentoRepository.buscarPorPaciente(Paciente_cpf);

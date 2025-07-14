@@ -37,8 +37,14 @@ public class HorarioAtendimentoController {
     }
 
     @GetMapping("/buscarPorMedico/{cpf}")
+    public ResponseEntity<List<HorarioAtendimentoResponseDto>> listaHorarioAtendimentoPorMedico(@PathVariable("cpf") String Medico_cpf) {
+        var resultado = this.horarioAtendimentoService.buscarPorMedico(Medico_cpf);
+        return ResponseEntity.ok(resultado);
+    }
+
+    @GetMapping("/buscarPorMedicoStatus/{cpf}")
     public ResponseEntity<List<HorarioAtendimentoResponseDto>> listaHorarioAtendimentoPorMedico(@PathVariable("cpf") String Medico_cpf, @RequestParam String status) {
-        var resultado = this.horarioAtendimentoService.buscarPorMedico(Medico_cpf, status);
+        var resultado = this.horarioAtendimentoService.buscarPorMedicoPorStatus(Medico_cpf, status);
         return ResponseEntity.ok(resultado);
     }
 

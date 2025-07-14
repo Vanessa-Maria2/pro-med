@@ -9,6 +9,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon'; 
 import { Router } from '@angular/router';
+import { PessoaType } from '../../models/pessoaType';
+import { UserService } from '../../services/user.service';
 
 interface Medicamento {
   id: number;
@@ -43,6 +45,7 @@ interface ExameTipo {
   styleUrl: './iniciar-atendimento.component.css'
 })
 export class IniciarAtendimentoComponent implements OnInit {
+  user: PessoaType | null = null;
 
   // Dados do formulário
   consultationSummary: string = '';
@@ -89,12 +92,13 @@ export class IniciarAtendimentoComponent implements OnInit {
     return invalid; 
   }
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private userService: UserService) {
+    this.user = this.userService.getLoggedInUser();
+  }
 
   ngOnInit(): void {
     
   }
-
   
   addPrescriptionItem(): void {
     this.prescriptionItems.push({ medicamentoId: null, dosagem: '', instrucoes: '' });

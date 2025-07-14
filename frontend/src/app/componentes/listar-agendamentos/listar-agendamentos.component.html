@@ -34,8 +34,7 @@
       </div>
       <div class="left-section">
         <button  matButton = "filled" class="btn-horario" disabled >  {{ horarioAtendimento.data | date:'dd/MM/yyyy' }} | {{ horarioAtendimento.horario }} </button> 
-
-        <button mat-mini-fab class="btn-remove">
+        <button mat-mini-fab class="btn-remove" *ngIf="user && user.tipo == 'médico'">
           <mat-icon>close</mat-icon>
         </button>
       </div>
