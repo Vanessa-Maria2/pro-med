@@ -148,6 +148,22 @@ public class HorarioAtendimentoRepository {
 
     }
 
+    public int liberarHorarioDoPaciente(int horarioId, String pacienteCpf) throws SQLException {
+        String sql = "UPDATE Horario_atendimento " +
+                "SET status = ?, Paciente_cpf = NULL " +
+                "WHERE id = ? AND Paciente_cpf = ?";
+
+        try (Connection connection = databaseConnection.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            ps.setString(1, String.valueOf(StatusHorarioAtendimento.CANCELADO));
+            ps.setInt(2, horarioId);
+            ps.setString(3, pacienteCpf);
+
+            return ps.executeUpdate();
+        }
+    }
+
     public int cancelarHorarioPorRecorrencia(int horarioId, int recorrenciaId) {
         String sql = "UPDATE horario_atendimento h " +
                 "JOIN recorrencia r ON h.Recorrencia_id = r.id " +
