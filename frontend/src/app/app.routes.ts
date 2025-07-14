@@ -6,7 +6,7 @@ import { DashboardComponent } from './componentes/dashboard/dashboard.component'
 import { AgendarConsultaComponent } from './componentes/agendar-consulta/agendar-consulta.component';
 import { ListarAgendamentosComponent } from './componentes/listar-agendamentos/listar-agendamentos.component';
 import { ConfigurarPerfilComponent } from './componentes/configurar-perfil/configurar-perfil.component';
-import { AtendimentoComponent } from './componentes/atendimento/atendimento.component';
+import { IniciarAtendimentoComponent } from './componentes/iniciar-atendimento/iniciar-atendimento.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -21,7 +21,7 @@ export const routes: Routes = [
       { path: 'agendar-consulta', component: AgendarConsultaComponent },
       { path: 'agenda', component: ListarAgendamentosComponent},
       { path: 'configuracoes', component: ConfigurarPerfilComponent},
-      { path: 'servicos', component: AtendimentoComponent}
+      { path: 'servicos', component: IniciarAtendimentoComponent}
     ]
   },
   { path: '**', redirectTo: 'login' }
