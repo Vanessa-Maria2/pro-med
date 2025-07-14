@@ -49,20 +49,4 @@ public class GrupoRecorrenciaRepository {
         }
         return grupoRecorrencia;
     }
-
-    public int cancelarTodosOsGruposPorMedico(Connection connection, int medicoCrm) throws SQLException {
-        String sql = "UPDATE GrupoRecorrencia gr " +
-                "SET gr.descricao = CONCAT('[CANCELADO] ', gr.descricao) " +
-                "WHERE gr.id IN (" +
-                "    SELECT DISTINCT r2.GrupoRecorrencia_id " +
-                "    FROM Recorrencia r2 " +
-                "    JOIN Horario_atendimento h ON r2.id = h.Recorrencia_id " +
-                "    WHERE h.Medico_num_crm = ?" +
-                ") AND NOT gr.descricao LIKE '[CANCELADO] %'";
-
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setInt(1, medicoCrm);
-            return ps.executeUpdate();
-        }
-    }
 }
