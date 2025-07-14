@@ -24,6 +24,26 @@ public class HorarioAtendimentoResponseDto {
 
     private String nomeMedico;
 
+    private String nomePaciente;
+
+    public String getNomePaciente() {
+        return nomePaciente;
+    }
+
+    public void setNomePaciente(String nomePaciente) {
+        this.nomePaciente = nomePaciente;
+    }
+
+    public String getSobrenomePaciente() {
+        return sobrenomePaciente;
+    }
+
+    public void setSobrenomePaciente(String sobrenomePaciente) {
+        this.sobrenomePaciente = sobrenomePaciente;
+    }
+
+    private String sobrenomePaciente;
+
     public String getSobrenomeMedico() {
         return sobrenomeMedico;
     }

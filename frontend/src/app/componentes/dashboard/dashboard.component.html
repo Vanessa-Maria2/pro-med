@@ -1,0 +1,43 @@
+<div class="card">
+  <h3 class="titulo" *ngIf="user && user.tipo === 'médico'">Consultas de hoje</h3>
+  <p>Seja bem vindo, {{ user?.nome }} {{ user?.sobrenome }}</p>
+
+</div>
+<div *ngIf="horarioAtendimentos.length > 0; else noAppointments" class="appointments-container">
+  <mat-card *ngFor="let horarioAtendimento of horarioAtendimentos" class="appointment-card">
+    <span 
+      class="status-badge" 
+      [ngClass]="{
+        'disponivel': horarioAtendimento.status === 'DISPONIVEL',
+        'cancelado': horarioAtendimento.status === 'CANCELADO',
+        'agendado': horarioAtendimento.status === 'AGENDADO'
+      }"
+    >
+      {{ horarioAtendimento.status }}
+    </span>
+    <mat-card-content class="card-content" *ngIf="user && user.tipo === 'médico'">
+      <div class="right-section">
+        <div class="doctor-name">
+          Dr(a). {{ horarioAtendimento.nomeMedico }} {{ horarioAtendimento.sobrenomeMedico }}
+        </div>
+      </div>
+      <div class="center">
+         <div class="doctor-name">
+          Paciente {{ horarioAtendimento.nomePaciente }} {{ horarioAtendimento.sobrenomePaciente }}
+        </div>
+      </div>
+      <div class="left-section">
+        <button  matButton = "filled" class="btn-horario" disabled >  {{ horarioAtendimento.data | date:'dd/MM/yyyy' }} | {{ horarioAtendimento.horario }} </button> 
+
+        <button mat-mini-fab class="btn-remove">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<ng-template #noAppointments>
+  <p>Nenhum atendimento agendado para hoje</p>
+</ng-template>
+

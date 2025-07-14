@@ -1,0 +1,63 @@
+<div class="login-container">
+    <div class="right-side">
+        <form class="login-form" (ngSubmit)="cadastrarUsuario()" #cadastroForm="ngForm">
+            <div class="form-row">
+                <mat-form-field appearance="fill" class="form-field-triple">
+                    <mat-label>Nome</mat-label>
+                    <input matInput name="nome" [(ngModel)]="cadastroData.pessoa.nome" required
+                        placeholder="Digite seu nome" #nome="ngModel" />
+                    <mat-error *ngIf="nome.invalid && nome.touched">
+                        <small *ngIf="nome.errors?.['required']">Nome é obrigatório</small>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="form-field-triple">
+                    <mat-label>Sobrenome</mat-label>
+                    <input matInput name="sobrenome" [(ngModel)]="cadastroData.pessoa.sobrenome" required
+                        placeholder="Digite seu sobrenome" #sobrenome="ngModel" />
+                    <mat-error *ngIf="sobrenome.invalid && sobrenome.touched">
+                        <small *ngIf="sobrenome.errors?.['required']">Sobrenome é obrigatório</small>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="form-row">
+                <mat-form-field appearance="fill" class="form-field-pair">
+                    <mat-label>Email</mat-label>
+                    <input matInput name="email" [(ngModel)]="cadastroData.pessoa.email" email required
+                        placeholder="Digite seu email" #email="ngModel" />
+                    <mat-error *ngIf="email.invalid && email.touched">
+                        <small *ngIf="email.errors?.['required']">Email é obrigatório</small>
+                        <small *ngIf="email.errors?.['email']">Email inválido</small>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="form-field-pair">
+                    <mat-label>Endereço</mat-label>
+                    <input matInput name="endereco" [(ngModel)]="cadastroData.pessoa.endereco" required
+                        placeholder="Digite seu endereço" #endereco="ngModel" />
+                    <mat-error *ngIf="endereco.invalid && endereco.touched">
+                        <small *ngIf="endereco.errors?.['required']">Endereço é obrigatório</small>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="form-row">
+                <mat-form-field appearance="fill" class="form-field-triple">
+                    <mat-label>Data de Nascimento</mat-label>
+                    <input matInput [matDatepicker]="picker" name="dataNascimento"
+                        [(ngModel)]="cadastroData.pessoa.dataNascimento" required #dataNascimento="ngModel" />
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-error *ngIf="dataNascimento.invalid && dataNascimento.touched">
+                        <small *ngIf="dataNascimento.errors?.['required']">Data de Nascimento é obrigatória</small>
+                    </mat-error>
+                </mat-form-field>
+
+                <app-campo [(itens)]="itensTelefones" [nomeCampo]="'Telefone'" [mask]="'(00) 00000-0000'"></app-campo>
+            </div>
+
+            <button mat-button type="submit" class="btn">Cadastrar</button>
+        </form>
+    </div>
+</div>
