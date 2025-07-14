@@ -47,57 +47,20 @@ public class MedicoService {
         return medicosDtoList;
     }
 
-    public void cancelarHorarioAtendimento(int medicoCrm, int horarioAtendimentoId) {
-        int linhasAfetadas = horarioAtendimentoRepository.cancelarHorarioAtendimento(horarioAtendimentoId, medicoCrm);
+    public void cancelarAgendaRecorrente(int grupoRecorrenciaId) {
+        int linhasAfetadas = horarioAtendimentoRepository.cancelarHorarioPorGrupoRecorrenciaAtendimento(grupoRecorrenciaId);
 
         if  (linhasAfetadas == 0) {
             throw new NoSuchElementException("Horário não existe ou já cadastrado ");
         }
-
     }
 
-    public void cancelarHorarioRecorrencia(int horarioId, int recorrenciaId) {
-        int linhasAfetadas = horarioAtendimentoRepository.cancelarHorarioPorRecorrencia(horarioId, recorrenciaId);
+    public void cancelarHorarioPorId(int horarioId) {
+        int linhasAfetadas = horarioAtendimentoRepository.cancelarHorarioPorId(horarioId);
 
         if (linhasAfetadas == 0) {
             throw new IllegalStateException("Não foi possível cancelar. O horário pode não existir, não pertencer a este médico ou já está ocupado/cancelado.");
         }
     }
-
-    public void cancelarTodaAgendaRecorrente(int medicoCrm) {
-        Connection connection = null;
-
-        try {
-            connection = databaseConnection.getConnection();
-            connection.setAutoCommit(false); // 1. INICIA A TRANSAÇÃO
-
-            int gruposAfetados = grupoRecorrenciaRepository.cancelarTodosOsGruposPorMedico(connection, medicoCrm);
-
-            if (gruposAfetados == 0) {
-                throw new IllegalStateException("Nenhum grupo de recorrência ativo encontrado para este médico.");
-            }
-
-            horarioAtendimentoRepository.cancelarTodosHorariosFuturosDoMedico(connection, medicoCrm);
-
-            connection.commit();
-
-        } catch (Exception e) {
-            if (connection != null) {
-                try {
-                    connection.rollback();
-                } catch (SQLException ex) {  }
-            }
-            throw new RuntimeException("Falha ao cancelar a agenda recorrente. A operação foi revertida.", e);
-
-        } finally {
-            if (connection != null) {
-                try {
-                    connection.setAutoCommit(true);
-                    connection.close();
-                } catch (SQLException ignore) { }
-            }
-        }
-    }
-
 
 }

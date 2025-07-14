@@ -31,26 +31,18 @@ public class MedicoController {
         return ResponseEntity.ok(medicos);
     }
 
-    @PutMapping("/crm/{medicoCrm}/horarios/{horarioId}")
-    public ResponseEntity<Void> removerHorarioAtendimento(@PathVariable int medicoCrm, @PathVariable int horarioId) {
-        medicoService.cancelarHorarioAtendimento(medicoCrm, horarioId);
-        return ResponseEntity.noContent().build();
-    }
-
-
-    @PutMapping("/{horarioId}/recorrencia/{recorrenciaId}")
+    @PutMapping("/cancelar-horario/{horarioId}")
     public ResponseEntity<Void> cancelarHorario(
-            @PathVariable int horarioId,
-            @PathVariable int recorrenciaId) {
+            @PathVariable int horarioId) {
 
-        medicoService.cancelarHorarioRecorrencia(horarioId,recorrenciaId);
+        medicoService.cancelarHorarioPorId(horarioId);
 
-        return ResponseEntity.ok().build(); // Retorna 200 OK
+        return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/{crm}/agenda-recorrente")
-    public ResponseEntity<Void> cancelarTodaAgendaRecorrente(@PathVariable int crm) {
-        medicoService.cancelarTodaAgendaRecorrente(crm);
+    @PutMapping("/cancelar-horario-recorrente/{recorrenciaId}")
+    public ResponseEntity<Void> cancelarTodaAgendaRecorrente(@PathVariable int recorrenciaId) {
+        medicoService.cancelarAgendaRecorrente(recorrenciaId);
         return ResponseEntity.noContent().build();
     }
 }

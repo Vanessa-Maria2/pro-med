@@ -98,8 +98,8 @@ public class HorarioAtendimentoRepository {
 
     public boolean isHorarioAtendimentoDisponivel(int horarioAtendimentoId) {
         String sql = "SELECT COUNT(*) FROM horario_atendimento WHERE id = ? AND status = ?";
-      
-       try {
+
+        try {
             Connection connection = databaseConnection.getConnection();
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, horarioAtendimentoId);
@@ -130,22 +130,20 @@ public class HorarioAtendimentoRepository {
         }
     }
 
-    public int cancelarHorarioAtendimento(int horarioAtendimentoId, int medicoCrm) {
+    public int cancelarHorarioPorGrupoRecorrenciaAtendimento(int recorrenciaId) {
         String sql = "UPDATE horario_atendimento SET status = ?" +
-                " WHERE id = ? AND Medico_num_crm  = ? AND status = 'DISPONIVEL'\n";
+                " WHERE Recorrencia_GrupoRecorrencia_id = ?";
 
-        try(Connection connection = databaseConnection.getConnection();
-            PreparedStatement ps = connection.prepareStatement(sql)){
+        try (Connection connection = databaseConnection.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setString(1, StatusHorarioAtendimento.CANCELADO.toString());
-            ps.setInt(2, horarioAtendimentoId);
-            ps.setInt(3, medicoCrm );
+            ps.setInt(2, recorrenciaId);
 
             return ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     public int liberarHorarioDoPaciente(int horarioId, String pacienteCpf) throws SQLException {
@@ -164,34 +162,19 @@ public class HorarioAtendimentoRepository {
         }
     }
 
-    public int cancelarHorarioPorRecorrencia(int horarioId, int recorrenciaId) {
-        String sql = "UPDATE horario_atendimento h " +
-                "JOIN recorrencia r ON h.Recorrencia_id = r.id " +
-                "SET h.status = ? " +
-                "WHERE h.id = ? AND r.id = ? AND h.status = 'DISPONIVEL'";
+    public int cancelarHorarioPorId(int horarioId) {
+        String sql = "UPDATE horario_atendimento h SET h.status = ? " +
+                "WHERE h.id = ?";
 
         try (Connection connection = databaseConnection.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setString(1, String.valueOf(StatusHorarioAtendimento.CANCELADO));
             ps.setInt(2, horarioId);
-            ps.setInt(3, recorrenciaId);
             return ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
     }
-        public void cancelarTodosHorariosFuturosDoMedico(Connection connection, int medicoCrm) throws SQLException {
-            String sql = "UPDATE Horario_atendimento " +
-                    "SET status = 'CANCELADO' " +
-                    "WHERE Medico_num_crm = ? " +
-                    "  AND status = 'DISPONIVEL' " +
-                    "  AND data_disponivel >= CURDATE()";
-
-            try (PreparedStatement ps = connection.prepareStatement(sql)) {
-                ps.setInt(1, medicoCrm);
-                ps.executeUpdate();
-            }
-        }
 }
