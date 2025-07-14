@@ -65,4 +65,19 @@ public class GrupoRecorrenciaRepository {
             return ps.executeUpdate();
         }
     }
+
+    public void atualizar(Connection connection, GrupoRecorrencia grupo) throws SQLException {
+        String sql = "UPDATE GrupoRecorrencia SET descricao = ? WHERE id = ?";
+
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, grupo.getDescricao());
+            ps.setInt(2, grupo.getId());
+
+            int linhasAfetadas = ps.executeUpdate();
+
+            if (linhasAfetadas == 0) {
+                throw new SQLException("Falha ao atualizar: Grupo de Recorrência com ID " + grupo.getId() + " não encontrado.");
+            }
+        }
+    }
 }

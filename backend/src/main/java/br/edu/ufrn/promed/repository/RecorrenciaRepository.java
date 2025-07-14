@@ -180,5 +180,21 @@ public class RecorrenciaRepository {
         return false;
     }
 
+    public void atualizar(Connection connection, Recorrencia recorrencia) throws SQLException {
+        String sql = "UPDATE Recorrencia SET hora_inicio = ?, hora_fim = ?, inicio_dia = ?, dia_fim = ? WHERE id = ?";
 
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setTime(1, recorrencia.getHora_inicio());
+            ps.setTime(2, recorrencia.getHora_fim());
+            ps.setDate(3, new java.sql.Date(recorrencia.getData_inicio().getTime()));
+            ps.setDate(4, new java.sql.Date(recorrencia.getData_fim().getTime()));
+            ps.setInt(5, recorrencia.getId()); // O ID da recorrência a ser atualizada
+
+            int linhasAfetadas = ps.executeUpdate();
+
+            if (linhasAfetadas == 0) {
+                throw new SQLException("Falha ao atualizar: Recorrência com ID " + recorrencia.getId() + " não encontrada.");
+            }
+        }
+    }
 }

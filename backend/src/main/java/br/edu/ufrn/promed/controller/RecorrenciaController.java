@@ -31,4 +31,15 @@ public class RecorrenciaController {
         var result = this.recorrenciaService.gerarDatas(recorrencia);
         return ResponseEntity.ok(result);
     }
+
+    @PutMapping("/{recorrenciaId}/medico/{medicoCpf}")
+    public ResponseEntity<Void> atualizarRecorrencia(
+            @PathVariable int recorrenciaId,
+            @PathVariable String medicoCpf,
+            @RequestBody RecorrenciaRequestDto dto) {
+
+        recorrenciaService.atualizarRecorrencia(recorrenciaId, medicoCpf, dto);
+
+        return ResponseEntity.ok().build();
+    }
 }

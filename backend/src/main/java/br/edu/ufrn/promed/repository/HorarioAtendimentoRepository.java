@@ -1,14 +1,13 @@
 package br.edu.ufrn.promed.repository;
 
 import br.edu.ufrn.promed.config.DatabaseConnection;
+import br.edu.ufrn.promed.dto.request.RecorrenciaRequestDto;
 import br.edu.ufrn.promed.dto.response.HorarioAtendimentoResponseDto;
 import br.edu.ufrn.promed.enums.StatusHorarioAtendimento;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -194,4 +193,51 @@ public class HorarioAtendimentoRepository {
                 ps.executeUpdate();
             }
         }
+
+    public boolean existeHorarioOcupadoNaRecorrencia(Connection connection, int recorrenciaId) throws SQLException {
+        String sql = "SELECT 1 FROM Horario_atendimento WHERE Recorrencia_id = ? AND status = ? LIMIT 1";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, recorrenciaId);
+            ps.setString(2, StatusHorarioAtendimento.AGENDADO.toString());
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next();
+            }
+        }
+    }
+
+    public void cancelarHorariosDoMedicoPorRecorrencia(Connection connection, int recorrenciaId, String medicoCpf) throws SQLException {
+        String sql = "UPDATE Horario_atendimento h " +
+                "JOIN Recorrencia r ON h.Recorrencia_id = r.id " +
+                "SET h.status = ? " +
+                "WHERE r.id = ? " +
+                "  AND h.Medico_cpf = ? " +
+                "  AND h.status = ? " +
+                "  AND h.data_disponivel >= CURDATE()";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, String.valueOf(StatusHorarioAtendimento.CANCELADO));
+            ps.setInt(2, recorrenciaId);
+            ps.setString(3, medicoCpf);
+            ps.setString(4, StatusHorarioAtendimento.DISPONIVEL.toString());
+            ps.executeUpdate();
+        }
+    }
+
+    public void inserirRecorrencia(Connection connection, String status, Time horario, LocalDate data, int medicoCrm, String medicoCpf, String medicoUf, int recorrenciaId, int grupoId) throws SQLException {
+        String sql = "INSERT INTO horario_atendimento (status, horario, data_disponivel, Paciente_cpf, Medico_num_crm, Medico_cpf, Medico_uf_crm, Recorrencia_id, Recorrencia_GrupoRecorrencia_id) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, status);
+            ps.setTime(2, horario);
+            ps.setDate(3, java.sql.Date.valueOf(data));
+            ps.setNull(4, Types.CHAR);
+            ps.setInt(5, medicoCrm);
+            ps.setString(6, medicoCpf);
+            ps.setString(7, medicoUf);
+            ps.setInt(8, recorrenciaId);
+            ps.setInt(9, grupoId);
+            ps.executeUpdate();
+        }
+    }
+
 }
