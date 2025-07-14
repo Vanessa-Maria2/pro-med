@@ -21,8 +21,8 @@
                       #horarioAtendimentoSelect="ngModel"> <mat-option *ngFor="let horario of horariosAtendimentos" [value]="horario.id">
                   {{ horario.data | date:'EEEE, dd \'de\' MMMM \'de\' yyyy' }} às {{ horario.horario }}
             </mat-option>
-            <mat-option *ngIf="doctors.length === 0" disabled>
-              Nenhum médico disponível 
+            <mat-option *ngIf="horariosAtendimentos.length === 0" disabled>
+              Nenhum horário disponível 
             </mat-option>
           </mat-select>
         </mat-form-field>

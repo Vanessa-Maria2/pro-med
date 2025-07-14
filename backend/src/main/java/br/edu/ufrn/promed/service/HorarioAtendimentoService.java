@@ -18,12 +18,12 @@ public class HorarioAtendimentoService {
         this.horarioAtendimentoRepository = horarioAtendimentoRepository;
     }
 
-    public List<HorarioAtendimentoResponseDto> buscarTodos() {
-        return this.horarioAtendimentoRepository.buscarTodas();
+    public List<HorarioAtendimentoResponseDto> buscarTodos(String status) {
+        return this.horarioAtendimentoRepository.buscarTodas(status);
     }
 
-    public List<HorarioAtendimentoResponseDto> buscarPorMedico(String Medico_cpf) {
-        List<HorarioAtendimentoResponseDto> horaraioDtoList = horarioAtendimentoRepository.buscarPorMedico(Medico_cpf);
+    public List<HorarioAtendimentoResponseDto> buscarPorMedico(String Medico_cpf, String status) {
+        List<HorarioAtendimentoResponseDto> horaraioDtoList = horarioAtendimentoRepository.buscarPorMedico(Medico_cpf, status);
         return horaraioDtoList;
     }
 

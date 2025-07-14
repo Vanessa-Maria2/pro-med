@@ -23,16 +23,18 @@ public class HorarioAtendimentoRepository {
         this.databaseConnection = databaseConnection;
     }
 
-    public List<HorarioAtendimentoResponseDto> buscarTodas() {
+    public List<HorarioAtendimentoResponseDto> buscarTodas(String status) {
         List<HorarioAtendimentoResponseDto> horarioAtendimentos = new ArrayList<>();
 
         String sql = "SELECT nome, sobrenome, status, horario, data_disponivel, id, Medico_cpf, Medico_num_crm, Medico_uf_crm FROM promed.horario_atendimento as ha \n" +
                 "join medico as m on ha.Medico_cpf = m.cpf\n" +
-                "join pessoa as p on m.cpf = p.cpf\n";
+                "join pessoa as p on m.cpf = p.cpf\n" +
+                "where (status IS NULL OR ha.status = ?)";
 
         try {
             Connection connection = databaseConnection.getConnection();
             PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, status);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 HorarioAtendimentoResponseDto horarioAtendimento = new HorarioAtendimentoResponseDto();
@@ -54,7 +56,7 @@ public class HorarioAtendimentoRepository {
         return horarioAtendimentos;
     }
 
-    public List<HorarioAtendimentoResponseDto> buscarPorMedico(String Medico_cpf) {
+    public List<HorarioAtendimentoResponseDto> buscarPorMedico(String Medico_cpf, String status) {
         List<HorarioAtendimentoResponseDto> horarioAtendimentos = new ArrayList<>();
 
         String sql = "SELECT h.id, h.status, h.horario, h.data_disponivel, h.Medico_num_crm, h.Medico_cpf," +
@@ -62,13 +64,14 @@ public class HorarioAtendimentoRepository {
                 "FROM horario_atendimento h " +
                 "JOIN medico m ON h.medico_cpf = m.cpf " +
                 "JOIN pessoa p ON m.cpf = p.cpf " +
-                "WHERE m.cpf = ?";
+                "WHERE m.cpf = ? AND (status IS NULL OR h.status = ?)";
 
         try {
             Connection connection = databaseConnection.getConnection();
             PreparedStatement ps = connection.prepareStatement(sql);
 
             ps.setString(1, Medico_cpf);
+            ps.setString(2, status);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {

@@ -58,6 +58,7 @@ export class AgendarConsultaComponent implements OnInit {
   }
 
   agendar(): void {
+
     if (this.selectedDoctorId && this.selectHorarioAtendimentoId) {
       const agenda = {
         horarioAtendimentoId: this.selectHorarioAtendimentoId,
@@ -94,10 +95,9 @@ export class AgendarConsultaComponent implements OnInit {
   }
 
   buscarHorarioAtendimento() {
-    this.http.get<HorarioAtendimentoType[]>(`${this.apiUrl}horario-atendimento/buscarPorMedico/${this.selectedDoctorId}`).subscribe({
+    this.http.get<HorarioAtendimentoType[]>(`${this.apiUrl}horario-atendimento/buscarPorMedico/${this.selectedDoctorId}?status=DISPONIVEL`).subscribe({
       next: (response) => {
         this.horariosAtendimentos = response;
-        console.log(this.doctors)
       }
     });
   }

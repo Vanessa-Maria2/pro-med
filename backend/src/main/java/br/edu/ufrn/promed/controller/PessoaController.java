@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
 @RestController
 @RequestMapping("pessoa")
 public class PessoaController {
@@ -52,7 +53,7 @@ public class PessoaController {
         return ResponseEntity.noContent().build();
     }
 
-    @PatchMapping("/{email}/senha")
+    @PutMapping("/{email}/senha")
     public ResponseEntity<Void> alterarSenha(@PathVariable String email, @Valid @RequestBody AlterarSenhaRequestDto dto){
         pessoaService.alterarSenha(email, dto.getSenhaAtual(), dto.getNovaSenha(), dto.getConfirmarSenha());
         return ResponseEntity.noContent().build();

@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { PessoaType } from '../../models/pessoaType';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -26,7 +27,8 @@ export class LoginComponent {
 
   constructor(private http: HttpClient,
               private router: Router,
-              private userService: UserService) {}
+              private userService: UserService,
+              private snackBar: MatSnackBar) {}
 
   login() {
     this.http.post<PessoaType>(this.apiUrl, this.loginData).subscribe({
@@ -46,9 +48,17 @@ export class LoginComponent {
             this.router.navigate(['/home']);
           },
           error: (error) => {
-            console.error('Erro no login:', error);
+            this.mensagem("Credencias inválidas", 'erro')
           },
         });  
     }
 
+  mensagem(mensagem: string, tipo: 'sucesso' | 'erro') {
+      this.snackBar.open(mensagem, 'Fechar', {
+        duration: 4000,
+        verticalPosition: 'top',
+        horizontalPosition: 'right',
+        panelClass: tipo === 'sucesso' ? 'snackbar-sucesso' : 'snackbar-erro',
+      });
+    }
 }
