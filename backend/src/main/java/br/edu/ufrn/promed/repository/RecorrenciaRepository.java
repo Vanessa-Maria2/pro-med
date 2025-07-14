@@ -3,6 +3,7 @@ package br.edu.ufrn.promed.repository;
 import br.edu.ufrn.promed.config.DatabaseConnection;
 import br.edu.ufrn.promed.dto.request.RecorrenciaRequestDto;
 import br.edu.ufrn.promed.enums.DiaSemana;
+import br.edu.ufrn.promed.enums.StatusHorarioAtendimento;
 import br.edu.ufrn.promed.model.Recorrencia;
 import org.springframework.stereotype.Repository;
 
@@ -23,11 +24,13 @@ public class RecorrenciaRepository {
     private final GrupoRecorrenciaRepository grupoRecorrenciaRepository;
 
     private final DiaSemanaRepository diaSemanaRepository;
+    private final HorarioAtendimentoRepository horarioAtendimentoRepository;
 
-    public RecorrenciaRepository(DatabaseConnection databaseConnection, GrupoRecorrenciaRepository grupoRecorrenciaRepository, DiaSemanaRepository diaSemanaRepository) {
+    public RecorrenciaRepository(DatabaseConnection databaseConnection, GrupoRecorrenciaRepository grupoRecorrenciaRepository, DiaSemanaRepository diaSemanaRepository, HorarioAtendimentoRepository horarioAtendimentoRepository) {
         this.databaseConnection = databaseConnection;
         this.grupoRecorrenciaRepository = grupoRecorrenciaRepository;
         this.diaSemanaRepository = diaSemanaRepository;
+        this.horarioAtendimentoRepository = horarioAtendimentoRepository;
     }
 
     public void cadastro(RecorrenciaRequestDto recorrenciaRequestDto) throws SQLException {
@@ -176,4 +179,6 @@ public class RecorrenciaRepository {
         }
         return false;
     }
+
+
 }
