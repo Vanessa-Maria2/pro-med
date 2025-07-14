@@ -36,48 +36,6 @@
   width: 100%;
 }
 
-.agendamento-form mat-form-field {
-  background-color: #ffffff;
-  border-radius: 4px; 
-}
-
-.agendamento-form .mat-mdc-form-field-flex {
-  background-color: #ffffff; 
-}
-
-.agendamento-form .mat-mdc-form-field-input-control.mat-mdc-form-field-hint-text-color input,
-.agendamento-form .mat-mdc-select-value {
-  color: #303030; 
-}
-
-.agendamento-form .mat-mdc-form-field-label,
-.agendamento-form .mat-mdc-form-field-placeholder {
-  color: #6a6a6a; 
-}
-
-.mat-mdc-select-panel {
-  background-color: #ffffff; 
-}
-
-.mat-mdc-option {
-  color: #303030; 
-}
-
-.mat-mdc-form-field.mat-focused .mat-mdc-form-field-ripple,
-.mat-mdc-form-field.mat-focused .mat-mdc-form-field-underline {
-  background-color: #478F96 !important; 
-}
-
-.mat-form-field-hint {
-    color: #6a6a6a;
-    font-size: 0.85em;
-    margin-top: 5px;
-}
-
-.mat-form-field-hint-wrapper .mat-form-field-hint:not(:last-child) {
-    margin-right: 10px;
-}
-
 .card-actions {
   display: flex;
   justify-content: center;

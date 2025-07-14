@@ -5,6 +5,7 @@ import br.edu.ufrn.promed.dto.response.HorarioAtendimentoResponseDto;
 import br.edu.ufrn.promed.enums.StatusHorarioAtendimento;
 import org.springframework.stereotype.Repository;
 
+import javax.xml.transform.Result;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,13 +27,11 @@ public class HorarioAtendimentoRepository {
 
         String sql = "SELECT nome, sobrenome, status, horario, data_disponivel, id, Medico_cpf, Medico_num_crm, Medico_uf_crm FROM promed.horario_atendimento as ha \n" +
                 "join medico as m on ha.Medico_cpf = m.cpf\n" +
-                "join pessoa as p on m.cpf = p.cpf\n" +
-                "where status = ?";
+                "join pessoa as p on m.cpf = p.cpf\n";
 
         try {
             Connection connection = databaseConnection.getConnection();
             PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setString(1, String.valueOf(StatusHorarioAtendimento.DISPONIVEL));
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 HorarioAtendimentoResponseDto horarioAtendimento = new HorarioAtendimentoResponseDto();
@@ -96,11 +95,10 @@ public class HorarioAtendimentoRepository {
     }
 
 
-    public boolean isHorarioAtendimentoDisponivel(int horarioAtendimentoId) {
+    public boolean isHorarioAtendimentoDisponivel(int horarioAtendimentoId, Connection connection) {
         String sql = "SELECT COUNT(*) FROM horario_atendimento WHERE id = ? AND status = ?";
-      
-       try {
-            Connection connection = databaseConnection.getConnection();
+
+        try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, horarioAtendimentoId);
             ps.setString(2, StatusHorarioAtendimento.DISPONIVEL.toString());
@@ -117,16 +115,31 @@ public class HorarioAtendimentoRepository {
         return false;
     }
 
-    public void ocuparHorario(int horarioAtendimentoId, Connection connection) {
-        String sql = "UPDATE horario_atendimento SET status = ? WHERE id = ?";
+    public boolean agendarHorarioAtendimento(int horarioAtendimentoId, String cpf) throws SQLException {
+        String sql = "UPDATE horario_atendimento SET status = ?, Paciente_cpf = ? WHERE id = ? ";
 
+        Connection connection = null;
         try {
+            connection = databaseConnection.getConnection();
+            connection.setAutoCommit(false);
+
+            if(!isHorarioAtendimentoDisponivel(horarioAtendimentoId, connection)) {
+                throw new RuntimeException("Horário de atendimento não está disponível");
+            }
+
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, StatusHorarioAtendimento.AGENDADO.toString());
-            ps.setInt(2, horarioAtendimentoId);
+            ps.setString(2, cpf);
+            ps.setInt(3, horarioAtendimentoId);
             ps.executeUpdate();
         } catch (Exception e) {
-            e.printStackTrace();
+            connection.rollback();
+            databaseConnection.closeConnection();
+        } finally {
+            connection.commit();
+            databaseConnection.closeConnection();
         }
+        return true;
     }
+
 }

@@ -6,6 +6,7 @@ import br.edu.ufrn.promed.repository.HorarioAtendimentoRepository;
 import org.springframework.stereotype.Service;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 @Service
@@ -25,12 +26,8 @@ public class HorarioAtendimentoService {
         List<HorarioAtendimentoResponseDto> horaraioDtoList = horarioAtendimentoRepository.buscarPorMedico(Medico_cpf);
         return horaraioDtoList;
     }
-  
-    public boolean isHorarioAtendimentoDisponivel(int horarioAtendimentoId) {
-        return this.horarioAtendimentoRepository.isHorarioAtendimentoDisponivel(horarioAtendimentoId);
-    }
 
-    public void ocuparHorario(int horarioAtendimentoId, Connection connection) {
-        this.horarioAtendimentoRepository.ocuparHorario(horarioAtendimentoId, connection);
+    public boolean agendarHorarioAtendimento(int horarioAtendimentoId, String cpf) throws SQLException {
+        return this.horarioAtendimentoRepository.agendarHorarioAtendimento(horarioAtendimentoId, cpf);
     }
 }

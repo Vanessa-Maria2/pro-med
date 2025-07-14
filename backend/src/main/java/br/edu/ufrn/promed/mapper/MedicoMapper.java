@@ -12,5 +12,6 @@ public interface MedicoMapper {
     @Mapping(source = "pessoaRequestDto", target = "pessoa")
     Medico toMedico(MedicoRequestDto medicoRequestDto);
 
+    @Mapping(source = "pessoa", target = "pessoaResponseDto")
     MedicoResponseDto toMedicoResponseDto(Medico medico);
 }

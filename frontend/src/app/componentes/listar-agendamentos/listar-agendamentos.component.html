@@ -1,26 +1,42 @@
 <div class="card">
-  <h3>Seus Agendamentos</h3>
+  <h3 class="titulo">Horários atendimentos</h3>
+  <p>{{ dataFormatada | date: 'd \'de\' MMMM \'de\' y' : 'pt-BR' }}</p>
+
   <div class="card-actions">
     <button mat-button color="primary" class="action-button" (click)="agendarConsulta()">
       <mat-icon>event</mat-icon> Agendar Consulta
     </button>
   </div>
 </div>
+<div *ngIf="horarioAtendimentos.length > 0; else noAppointments" class="appointments-container">
+  <mat-card *ngFor="let horarioAtendimento of horarioAtendimentos" class="appointment-card">
+    <span 
+      class="status-badge" 
+      [ngClass]="{
+        'disponivel': horarioAtendimento.status === 'DISPONIVEL',
+        'cancelado': horarioAtendimento.status === 'CANCELADO',
+        'agendado': horarioAtendimento.status === 'AGENDADO'
+      }"
+    >
+      {{ horarioAtendimento.status }}
+    </span>
+    <mat-card-content class="card-content">
+      <div class="right-section">
+        <div class="doctor-name">
+          Dr(a). {{ horarioAtendimento.nomeMedico }} {{ horarioAtendimento.sobrenomeMedico }}
+        </div>
+      </div>
+      <div class="left-section">
+        <button  matButton = "filled" class="btn-horario" disabled >  {{ horarioAtendimento.data | date:'dd/MM/yyyy' }} | {{ horarioAtendimento.horario }} </button> 
 
-<div class="card patient-appointments-card">
-  <mat-list *ngIf="agendamentos.length > 0; else noAppointments">
-    <mat-list-item *ngFor="let agendamento of agendamentos">
-      <mat-icon matListItemIcon>event_note</mat-icon>
-      <div matListItemTitle class="mat-list-item-title">
-        {{agendamento.especialidade}} - Dr(a). {{agendamento.medico}}
+        <button mat-mini-fab class="btn-remove">
+          <mat-icon>close</mat-icon>
+        </button>
       </div>
-      <div matListItemLine class="mat-list-item-title">
-        Data: {{agendamento.data}} | Horário: {{agendamento.horario}}
-      </div>
-      <mat-divider></mat-divider>
-    </mat-list-item>
-  </mat-list>
-  <ng-template #noAppointments>
-    <p>Você ainda não possui agendamentos.</p>
-  </ng-template>
+    </mat-card-content>
+  </mat-card>
 </div>
+
+<ng-template #noAppointments>
+  <p>Você ainda não possui agendamentos.</p>
+</ng-template>

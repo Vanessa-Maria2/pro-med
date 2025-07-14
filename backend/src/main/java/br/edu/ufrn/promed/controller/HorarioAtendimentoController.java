@@ -1,13 +1,13 @@
 package br.edu.ufrn.promed.controller;
 
+import br.edu.ufrn.promed.dto.request.AgendarHorarioAtendimentoRequestDto;
 import br.edu.ufrn.promed.dto.response.HorarioAtendimentoResponseDto;
 import br.edu.ufrn.promed.service.HorarioAtendimentoService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @RestController
@@ -24,6 +24,16 @@ public class HorarioAtendimentoController {
     public ResponseEntity<List<HorarioAtendimentoResponseDto>> listaHorarioAtendimento() {
         var resultado = this.horarioAtendimentoService.buscarTodos();
         return ResponseEntity.ok(resultado);
+    }
+
+    @PostMapping("/agendar")
+    public ResponseEntity<String> agendarHorarioAtendimento(@RequestBody AgendarHorarioAtendimentoRequestDto dto) throws SQLException {
+        var agendado = this.horarioAtendimentoService.agendarHorarioAtendimento(dto.getHorarioAtendimentoId(), dto.getCpf());
+        if (agendado) {
+            return ResponseEntity.ok("Horário agendado com sucesso.");
+        } else {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Não foi possível agendar o horário.");
+        }
     }
 
     @GetMapping("/buscarPorMedico/{cpf}")

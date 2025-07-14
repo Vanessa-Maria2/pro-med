@@ -3,16 +3,16 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
-import { MatListModule } from '@angular/material/list'; 
-import { MatCardModule } from '@angular/material/card'; 
-import { MatDividerModule } from '@angular/material/divider'; 
-import { UserService } from '../../services/user.service'; 
-import { PessoaType } from '../../models/pessoaType';
+import { MatListModule } from '@angular/material/list';
+import { MatCardModule } from '@angular/material/card';
+import { MatDividerModule } from '@angular/material/divider';
+import { UserService } from '../../services/user.service';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { Router } from '@angular/router';
-import { AgendamentoType } from '../../models/agendamentoType';
+import { HorarioAtendimentoType } from '../../models/horarioAtendimento';
+import { HttpClient } from '@angular/common/http';
+import { MatChipsModule } from '@angular/material/chips';
 
 @Component({
   selector: 'app-listar-agendamentos',
@@ -24,25 +24,39 @@ import { AgendamentoType } from '../../models/agendamentoType';
     MatCardModule,
     MatDividerModule,
     MatSidenavModule,
-    RouterModule],
+    RouterModule,
+    MatChipsModule
+  ],
   templateUrl: './listar-agendamentos.component.html',
   styleUrl: './listar-agendamentos.component.css'
 })
 export class ListarAgendamentosComponent {
+  apiUrl = 'http://localhost:8080/';
+  dataAtual: Date = new Date();
+  dataFormatada: string = '';
 
-   agendamentos: AgendamentoType[] = [
-    { especialidade: 'Cardiologia', medico: 'Dra. Ana Costa', data: '2025-07-25', horario: '10:00' },
-    { especialidade: 'Dermatologia', medico: 'Dr. Bruno Lima', data: '2025-08-01', horario: '14:30' },
-    { especialidade: 'Odontologia', medico: 'Dra. Carla Souza', data: '2025-08-10', horario: '09:15' },
-  ];
+  horarioAtendimentos: HorarioAtendimentoType[] = []
 
-  constructor(private userService: UserService, private router: Router) {} 
+  constructor(private userService: UserService, private router: Router, private http: HttpClient) {
+   
+   }
 
-  // Método placeholder para a função de agendar consulta
   agendarConsulta(): void {
-    console.log('Navegando para a página de agendamento de consulta...');
-    this.router.navigate(['/agendar-consulta']); 
+    this.router.navigate(['/agendar-consulta']);
   }
 
+  buscarHorarioAtendimento() {
+    this.http.get<HorarioAtendimentoType[]>(`${this.apiUrl}horario-atendimento`).subscribe({
+      next: (response) => {
+        this.horarioAtendimentos = response;
+      },
+      error: (error) => {
+      },
+    });
+  }
+
+  ngOnInit(): void {
+    this.buscarHorarioAtendimento()
+  }
 
 }
